@@ -17,7 +17,7 @@ const HowItWorksModal: React.FC<HowItWorksModalProps> = ({ buttonClassName = '' 
       {/* How It Works Button */}
       <button 
         onClick={openModal}
-        className={`px-4 py-2 bg-primary hover:bg-primary/90 text-white rounded-full font-medium transition-all duration-200 flex items-center gap-2 animate-bounceAndGlow hover:animate-none ${buttonClassName}`}
+        className={`px-4 py-2 bg-primary hover:bg-primary/90 text-white rounded-full font-medium transition-all duration-200 flex items-center gap-2 ${buttonClassName}`}
       >
         <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -50,6 +50,16 @@ const HowItWorksModal: React.FC<HowItWorksModalProps> = ({ buttonClassName = '' 
 
             {/* Modal Body */}
             <div className="p-6 max-h-[70vh] overflow-y-auto">
+              {/* Warning Banner */}
+              <div className="mb-6 p-4 bg-yellow-500/10 border border-yellow-500/20 rounded-lg">
+                <p className="text-yellow-500 text-sm font-medium flex items-center gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                  </svg>
+                  Contract Address (CA) will be posted exclusively on our X (Twitter) account
+                </p>
+              </div>
+
               <div className="space-y-6">
                 {/* Creating Tokens Section */}
                 <div>
@@ -66,9 +76,6 @@ const HowItWorksModal: React.FC<HowItWorksModalProps> = ({ buttonClassName = '' 
                       <li>Set an initial market cap (this affects initial pricing)</li>
                       <li>Submit your token creation transaction</li>
                     </ol>
-                    <p className="text-gray-400 text-sm mt-2">
-                      Your token will be stored in our Firebase Realtime Database and immediately appear in the trending section.
-                    </p>
                   </div>
                 </div>
 
