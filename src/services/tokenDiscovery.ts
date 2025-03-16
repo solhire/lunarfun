@@ -3,18 +3,20 @@ import { ref, set, get } from 'firebase/database';
 import { db } from '@/firebase/config';
 import { config } from '@/config/env';
 import { testFirebaseConnection } from '@/firebase/config';
+import axios from 'axios';
 
 export interface TokenInfo {
   address: string;
-  symbol: string;
   name: string;
+  symbol: string;
   decimals: number;
-  logoURI?: string;
+  logoURI: string;
   createdAt: number;
-  liquidity?: number;
-  volume24h?: number;
-  priceUsd?: number;
-  source: 'raydium' | 'pump';
+  liquidity: number;
+  volume24h: number;
+  price: number;
+  priceChange24h: number;
+  marketCap: number;
 }
 
 export class TokenDiscoveryService {
@@ -73,7 +75,10 @@ export class TokenDiscoveryService {
           createdAt: new Date(pair.addedTime).getTime(),
           liquidity: pair.liquidity,
           volume24h: pair.volume24h,
-          priceUsd: pair.price,
+          price: pair.price,
+          priceChange24h: 0,
+          marketCap: 0,
+          logoURI: '',
           source: 'raydium' as const
         }));
     } catch (error) {
@@ -100,7 +105,10 @@ export class TokenDiscoveryService {
           logoURI: token.logoURI,
           createdAt: new Date(token.createdAt).getTime(),
           liquidity: token.liquidity,
-          priceUsd: token.price,
+          volume24h: 0,
+          price: token.price,
+          priceChange24h: 0,
+          marketCap: 0,
           source: 'pump' as const
         }));
     } catch (error) {
@@ -179,4 +187,175 @@ export class TokenDiscoveryService {
       throw error;
     }
   }
-} 
+}
+
+// Mock data for trending tokens
+export const getMockTrendingTokens = (): TokenInfo[] => {
+  return [
+    {
+      address: '9XyPJ7WsYsQF3hGrFqgMrL9LGy7nKeDVM5L3F9WvVJjZ',
+      name: 'BWIRT',
+      symbol: 'BWIRT',
+      decimals: 9,
+      logoURI: '/tokens/bwirt.jpg',
+      createdAt: Date.now() - 24 * 60 * 60 * 1000, // 24 hours ago
+      liquidity: 4200000,
+      volume24h: 150000,
+      price: 0.00002345,
+      priceChange24h: 12.8,
+      marketCap: 1500000,
+    },
+    {
+      address: 'JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN',
+      name: 'Jupiter',
+      symbol: 'JUP',
+      decimals: 6,
+      logoURI: '/tokens/jup.png',
+      createdAt: Date.now() - 48 * 60 * 60 * 1000, // 48 hours ago
+      liquidity: 28000000,
+      volume24h: 950000,
+      price: 1.23,
+      priceChange24h: 5.3,
+      marketCap: 2800000,
+    },
+    {
+      address: '7nZbHGwzFJ9Dz8uBeRLnmJeBrUVMS8C8YoycjgE3XJ11',
+      name: 'FAT VANCE',
+      symbol: 'FANCE',
+      decimals: 9,
+      logoURI: '/tokens/fv.jpg',
+      createdAt: Date.now() - 72 * 60 * 60 * 1000, // 72 hours ago
+      liquidity: 3700000,
+      volume24h: 120000,
+      price: 0.037,
+      priceChange24h: -2.5,
+      marketCap: 980000,
+    },
+    {
+      address: 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',
+      name: 'USD Coin',
+      symbol: 'USDC',
+      decimals: 6,
+      logoURI: '/tokens/usdc.png',
+      createdAt: Date.now() - 365 * 24 * 60 * 60 * 1000, // 1 year ago
+      liquidity: 500000000,
+      volume24h: 25000000,
+      price: 1.0,
+      priceChange24h: 0.01,
+      marketCap: 25000000000,
+    },
+    {
+      address: 'So11111111111111111111111111111111111111112',
+      name: 'Wrapped SOL',
+      symbol: 'SOL',
+      decimals: 9,
+      logoURI: '/tokens/sol.png',
+      createdAt: Date.now() - 365 * 24 * 60 * 60 * 1000, // 1 year ago
+      liquidity: 450000000,
+      volume24h: 22000000,
+      price: 150.25,
+      priceChange24h: 3.2,
+      marketCap: 65000000000,
+    }
+  ];
+};
+
+// Mock data for Solana tokens from Codex
+export const getMockSolanaTokens = () => {
+  return {
+    data: {
+      tokens: [
+        {
+          address: '9XyPJ7WsYsQF3hGrFqgMrL9LGy7nKeDVM5L3F9WvVJjZ',
+          name: 'BWIRT',
+          symbol: 'BWIRT',
+          decimals: 9,
+          logoURI: '/tokens/bwirt.jpg',
+          createdAt: Date.now() - 24 * 60 * 60 * 1000, // 24 hours ago
+          liquidity: 4200000,
+          volume24h: 150000,
+          price: 0.00002345,
+          priceChange24h: 12.8,
+          marketCap: 1500000,
+        },
+        {
+          address: 'JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN',
+          name: 'Jupiter',
+          symbol: 'JUP',
+          decimals: 6,
+          logoURI: '/tokens/jup.png',
+          createdAt: Date.now() - 48 * 60 * 60 * 1000, // 48 hours ago
+          liquidity: 28000000,
+          volume24h: 950000,
+          price: 1.23,
+          priceChange24h: 5.3,
+          marketCap: 2800000,
+        },
+        {
+          address: '7nZbHGwzFJ9Dz8uBeRLnmJeBrUVMS8C8YoycjgE3XJ11',
+          name: 'FAT VANCE',
+          symbol: 'FANCE',
+          decimals: 9,
+          logoURI: '/tokens/fv.jpg',
+          createdAt: Date.now() - 72 * 60 * 60 * 1000, // 72 hours ago
+          liquidity: 3700000,
+          volume24h: 120000,
+          price: 0.037,
+          priceChange24h: -2.5,
+          marketCap: 980000,
+        }
+      ]
+    }
+  };
+};
+
+// Function to fetch Solana tokens from Codex API
+export const getSolanaTokens = async () => {
+  try {
+    const apiKey = process.env.NEXT_PUBLIC_CODEX_API_KEY;
+    
+    if (!apiKey) {
+      console.error('API key was not found');
+      return getMockSolanaTokens();
+    }
+    
+    const response = await axios.post(
+      'https://api.codex.so/graphql',
+      {
+        query: `
+          query GetSolanaTokens {
+            tokens(
+              filter: { 
+                networkIds: [1399811149]
+                limit: 10
+                sortBy: VOLUME_DESC
+              }
+            ) {
+              address
+              name
+              symbol
+              decimals
+              logoURI
+              volume24h
+              liquidity
+              price
+              priceChange24h
+              marketCap
+            }
+          }
+        `
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': apiKey
+        }
+      }
+    );
+    
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching Solana tokens:', error);
+    return getMockSolanaTokens();
+  }
+}; 

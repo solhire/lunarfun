@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import Header from '@/components/Header';
 import TokenCard from '@/components/TokenCard';
 import Link from 'next/link';
 
@@ -77,8 +76,6 @@ export default function ExplorePage() {
   
   return (
     <main className="min-h-screen">
-      <Header />
-      
       <div className="container mx-auto px-4 py-10 max-w-4xl">
         <h1 className="text-3xl font-bold text-center mb-8">Explore Tokens</h1>
         

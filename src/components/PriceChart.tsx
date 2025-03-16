@@ -1,215 +1,210 @@
 'use client';
 
-import { FC, useState, useEffect } from 'react';
+import { FC, useState, useEffect, useRef } from 'react';
+import { createChart, ColorType, AreaSeries } from 'lightweight-charts';
 
-interface PriceChartProps {
-  tokenId: string;
+export interface PriceChartProps {
+  tokenSymbol: string;
 }
 
-const PriceChart: FC<PriceChartProps> = ({ tokenId }) => {
+const PriceChart: FC<PriceChartProps> = ({ tokenSymbol }) => {
+  const chartContainerRef = useRef<HTMLDivElement>(null);
+  const chartRef = useRef<any>(null);
   const [timeframe, setTimeframe] = useState('24h');
-  const [chartData, setChartData] = useState<{ time: string; price: number }[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  // Generate mock data for the chart
+  
   useEffect(() => {
-    setIsLoading(true);
-
-    // Generate random price data based on the selected timeframe
-    const generateMockData = () => {
-      const now = new Date();
-      const data: { time: string; price: number }[] = [];
-      
-      let points = 24;
-      let interval = 60; // minutes
-      let basePrice = 0.005; // Base price in SOL
-      let volatility = 0.2; // Price volatility factor
-      
-      // Adjust based on timeframe
-      if (timeframe === '1h') {
-        points = 60;
-        interval = 1; // 1 minute intervals
-        volatility = 0.05;
-      } else if (timeframe === '24h') {
-        points = 24;
-        interval = 60; // 1 hour intervals
+    if (!chartContainerRef.current) return;
+    
+    // Create chart
+    const chart = createChart(chartContainerRef.current, {
+      layout: {
+        background: { type: ColorType.Solid, color: 'transparent' },
+        textColor: '#d1d5db',
+      },
+      grid: {
+        vertLines: { color: 'rgba(42, 46, 57, 0.6)' },
+        horzLines: { color: 'rgba(42, 46, 57, 0.6)' },
+      },
+      width: chartContainerRef.current.clientWidth,
+      height: 300,
+    });
+    
+    // Add area series
+    const areaSeries = chart.addSeries(AreaSeries, {
+      topColor: 'rgba(38, 198, 218, 0.56)',
+      bottomColor: 'rgba(38, 198, 218, 0.04)',
+      lineColor: 'rgba(38, 198, 218, 1)',
+      lineWidth: 2,
+    });
+    
+    // Generate mock price data based on token symbol
+    const currentDate = new Date();
+    const mockData = [];
+    
+    // Different price patterns based on token
+    let basePrice = 0;
+    let volatility = 0;
+    
+    switch (tokenSymbol) {
+      case 'SOL':
+        basePrice = 150;
+        volatility = 5;
+        break;
+      case 'BWIRT':
+        basePrice = 0.00002;
+        volatility = 0.000005;
+        break;
+      case 'FANCE':
+        basePrice = 0.03;
+        volatility = 0.005;
+        break;
+      case 'JUP':
+        basePrice = 1.2;
+        volatility = 0.1;
+        break;
+      default:
+        basePrice = 1;
         volatility = 0.2;
+    }
+    
+    // Determine number of data points based on timeframe
+    let dataPoints = 30;
+    switch (timeframe) {
+      case '1h':
+        dataPoints = 60; // 1 minute intervals
+        break;
+      case '24h':
+        dataPoints = 24; // 1 hour intervals
+        break;
+      case '7d':
+        dataPoints = 7 * 24; // 1 hour intervals for 7 days
+        break;
+      case '30d':
+        dataPoints = 30; // 1 day intervals
+        break;
+    }
+    
+    // Generate data
+    for (let i = dataPoints; i >= 0; i--) {
+      const date = new Date();
+      
+      // Adjust date based on timeframe
+      if (timeframe === '1h') {
+        date.setMinutes(date.getMinutes() - i);
+      } else if (timeframe === '24h') {
+        date.setHours(date.getHours() - i);
       } else if (timeframe === '7d') {
-        points = 7 * 24;
-        interval = 60 * 4; // 4 hour intervals
-        volatility = 0.4;
-      } else if (timeframe === '30d') {
-        points = 30;
-        interval = 60 * 24; // 1 day intervals
-        volatility = 0.7;
+        date.setHours(date.getHours() - (i * 4)); // Every 4 hours
+      } else {
+        date.setDate(date.getDate() - i);
       }
       
-      for (let i = 0; i < points; i++) {
-        const time = new Date(now.getTime() - (points - i) * interval * 60000);
-        const randomFactor = 1 + (Math.random() - 0.5) * volatility;
-        const price = basePrice * randomFactor;
-        
-        data.push({
-          time: time.toISOString(),
-          price: price
+      // Create some price movement patterns
+      let priceChange = (Math.random() - 0.5) * volatility;
+      
+      // Add some trends
+      if (i > dataPoints * 0.7) {
+        priceChange -= volatility * 0.2; // Downtrend at start
+      } else if (i > dataPoints * 0.3) {
+        priceChange += volatility * 0.3; // Uptrend in middle
+      } else {
+        priceChange += (Math.sin(i) * volatility * 0.5); // Oscillation at end
+      }
+      
+      if (i === 0) {
+        // Ensure the last price matches the current price for SOL
+        if (tokenSymbol === 'SOL') {
+          mockData.push({
+            time: formatDateToString(date),
+            value: 150.25,
+          });
+        } else {
+          mockData.push({
+            time: formatDateToString(date),
+            value: basePrice * (1 + (Math.random() - 0.3) * 0.1),
+          });
+        }
+      } else {
+        mockData.push({
+          time: formatDateToString(date),
+          value: basePrice + (basePrice * priceChange),
         });
         
-        // Update the base price for next iteration to create continuity
-        basePrice = price;
+        // Update base price for next iteration
+        basePrice += basePrice * priceChange;
       }
-      
-      return data;
+    }
+    
+    // Set the data
+    areaSeries.setData(mockData);
+    
+    // Fit content
+    chart.timeScale().fitContent();
+    
+    // Handle resize
+    const handleResize = () => {
+      if (chartContainerRef.current) {
+        chart.applyOptions({ width: chartContainerRef.current.clientWidth });
+      }
     };
-
-    // Simulate API call delay
-    setTimeout(() => {
-      setChartData(generateMockData());
-      setIsLoading(false);
-    }, 500);
-
-  }, [timeframe, tokenId]);
-
-  // Calculate price change percentage
-  const calculatePriceChange = () => {
-    if (chartData.length < 2) return 0;
     
-    const firstPrice = chartData[0].price;
-    const currentPrice = chartData[chartData.length - 1].price;
-    const percentChange = ((currentPrice - firstPrice) / firstPrice) * 100;
+    window.addEventListener('resize', handleResize);
     
-    return percentChange;
-  };
+    // Save chart reference for cleanup
+    chartRef.current = chart;
+    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      chart.remove();
+    };
+  }, [tokenSymbol, timeframe]);
 
-  const priceChange = calculatePriceChange();
-  const isPositive = priceChange >= 0;
-
-  // Create a simple visualization of the chart
-  const renderChart = () => {
-    if (chartData.length === 0) return null;
-    
-    const highestPrice = Math.max(...chartData.map(d => d.price));
-    const lowestPrice = Math.min(...chartData.map(d => d.price));
-    const range = highestPrice - lowestPrice;
-    
-    const points = chartData.map((point, i) => {
-      const x = (i / (chartData.length - 1)) * 100;
-      const y = 100 - ((point.price - lowestPrice) / range) * 100;
-      return `${x},${y}`;
-    }).join(' ');
-
-    const gradientId = `chart-gradient-${tokenId}`;
-    
-    return (
-      <div className="relative w-full h-64 mt-4">
-        <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
-          {/* Gradient for area under the line */}
-          <defs>
-            <linearGradient id={gradientId} x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor={isPositive ? 'rgba(34, 197, 94, 0.2)' : 'rgba(239, 68, 68, 0.2)'} />
-              <stop offset="100%" stopColor="rgba(26, 27, 37, 0)" />
-            </linearGradient>
-          </defs>
-          
-          {/* Area under the line */}
-          <polygon 
-            points={`0,100 ${points} 100,100`} 
-            fill={`url(#${gradientId})`}
-          />
-          
-          {/* Line */}
-          <polyline 
-            points={points} 
-            fill="none" 
-            stroke={isPositive ? 'rgb(34, 197, 94)' : 'rgb(239, 68, 68)'} 
-            strokeWidth="1.5" 
-          />
-        </svg>
-      </div>
-    );
+  // Helper function to format date to string in YYYY-MM-DD format for daily data
+  // or to timestamp for intraday data
+  const formatDateToString = (date: Date): string => {
+    if (timeframe === '30d') {
+      // Use business day format for daily data (YYYY-MM-DD)
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    } else {
+      // Use timestamp for intraday data
+      return Math.floor(date.getTime() / 1000).toString();
+    }
   };
 
   return (
-    <div className="bg-navy-600 rounded-xl p-4">
+    <div>
       <div className="flex justify-between items-center mb-4">
-        <h3 className="font-bold">Price Chart</h3>
-        
-        <div className="flex rounded-lg overflow-hidden border border-navy-500">
-          {['1h', '24h', '7d', '30d'].map((tf) => (
-            <button
-              key={tf}
-              className={`px-3 py-1 text-sm ${
-                timeframe === tf
-                  ? 'bg-primary text-navy font-medium'
-                  : 'bg-navy-700 text-gray-400 hover:bg-navy-500'
-              }`}
-              onClick={() => setTimeframe(tf)}
-            >
-              {tf}
-            </button>
-          ))}
+        <div className="flex space-x-2">
+          <button 
+            className={`px-3 py-1 text-sm ${timeframe === '1h' ? 'bg-blue-600' : 'bg-gray-700 hover:bg-gray-600'} rounded-md`}
+            onClick={() => setTimeframe('1h')}
+          >
+            1H
+          </button>
+          <button 
+            className={`px-3 py-1 text-sm ${timeframe === '24h' ? 'bg-blue-600' : 'bg-gray-700 hover:bg-gray-600'} rounded-md`}
+            onClick={() => setTimeframe('24h')}
+          >
+            24H
+          </button>
+          <button 
+            className={`px-3 py-1 text-sm ${timeframe === '7d' ? 'bg-blue-600' : 'bg-gray-700 hover:bg-gray-600'} rounded-md`}
+            onClick={() => setTimeframe('7d')}
+          >
+            7D
+          </button>
+          <button 
+            className={`px-3 py-1 text-sm ${timeframe === '30d' ? 'bg-blue-600' : 'bg-gray-700 hover:bg-gray-600'} rounded-md`}
+            onClick={() => setTimeframe('30d')}
+          >
+            30D
+          </button>
         </div>
       </div>
-      
-      {isLoading ? (
-        <div className="flex items-center justify-center h-64">
-          <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary"></div>
-        </div>
-      ) : (
-        <>
-          <div className="mb-4">
-            <div className="flex items-baseline">
-              <span className="text-3xl font-bold">
-                {chartData[chartData.length - 1]?.price.toFixed(6)}
-              </span>
-              <span className="ml-2 text-gray-400">SOL</span>
-              
-              <span className={`ml-4 ${isPositive ? 'text-green-500' : 'text-red-500'} text-sm font-medium`}>
-                {isPositive ? '+' : ''}{priceChange.toFixed(2)}%
-              </span>
-            </div>
-            
-            <div className="text-xs text-gray-400 mt-1">
-              = ${(chartData[chartData.length - 1]?.price * 100).toFixed(2)} USD
-            </div>
-          </div>
-          
-          {renderChart()}
-          
-          <div className="flex justify-between text-xs text-gray-400 mt-2">
-            {['1h', '24h', '7d', '30d'].includes(timeframe) ? (
-              <>
-                <span>
-                  {new Date(chartData[0].time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                </span>
-                <span>
-                  {new Date(chartData[Math.floor(chartData.length / 3)].time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                </span>
-                <span>
-                  {new Date(chartData[Math.floor(chartData.length * 2 / 3)].time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                </span>
-                <span>
-                  {new Date(chartData[chartData.length - 1].time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                </span>
-              </>
-            ) : (
-              <>
-                <span>
-                  {new Date(chartData[0].time).toLocaleDateString()}
-                </span>
-                <span>
-                  {new Date(chartData[Math.floor(chartData.length / 3)].time).toLocaleDateString()}
-                </span>
-                <span>
-                  {new Date(chartData[Math.floor(chartData.length * 2 / 3)].time).toLocaleDateString()}
-                </span>
-                <span>
-                  {new Date(chartData[chartData.length - 1].time).toLocaleDateString()}
-                </span>
-              </>
-            )}
-          </div>
-        </>
-      )}
+      <div ref={chartContainerRef} className="w-full h-[300px]" />
     </div>
   );
 };
