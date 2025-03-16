@@ -4,6 +4,10 @@ import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import WalletContextProvider from "@/providers/WalletContextProvider";
 import TokenDiscoveryProvider from "@/components/TokenDiscoveryProvider";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import { Providers } from "./providers";
+import { NewTokenNotifications } from "@/services/codexWebsocketService";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -33,11 +37,18 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${spaceGrotesk.variable} antialiased bg-navy text-white min-h-screen`}
       >
-        <WalletContextProvider>
-          <TokenDiscoveryProvider>
-            {children}
-          </TokenDiscoveryProvider>
-        </WalletContextProvider>
+        <Providers>
+          <Navbar />
+          <main className="flex-grow">
+            <WalletContextProvider>
+              <TokenDiscoveryProvider>
+                {children}
+              </TokenDiscoveryProvider>
+            </WalletContextProvider>
+          </main>
+          <Footer />
+          <NewTokenNotifications />
+        </Providers>
       </body>
     </html>
   );
