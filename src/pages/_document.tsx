@@ -7,8 +7,9 @@ export default function Document() {
         <meta charSet="utf-8" />
         <meta name="theme-color" content="#FFD100" />
         <link rel="manifest" href="/manifest.json" />
-        <link rel="icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-16x16.png" />
+        <link rel="apple-touch-icon" href="/favicon-16x16.png" />
         <meta name="description" content="The easiest way to create, launch and trade memecoins on Solana with no code required" />
         <meta name="keywords" content="solana, memecoin, token, crypto, blockchain, defi" />
         <meta property="og:title" content="Yummy.fun - Launch your Solana token in seconds" />
