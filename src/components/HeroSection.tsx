@@ -4,6 +4,8 @@ import { FC, useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useTokenStats, TokenData } from '@/hooks/useTokenStats';
+import { useWallet } from '@solana/wallet-adapter-react';
+import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 
 const HeroSection: FC = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -12,6 +14,7 @@ const HeroSection: FC = () => {
   const [sortOption, setSortOption] = useState<'yums.fun tokens' | 'yums.fun' | 'pump.fun'>('yums.fun tokens');
   const [showSortOptions, setShowSortOptions] = useState(false);
   const { topToken, loading } = useTokenStats();
+  const { connected } = useWallet();
   
   useEffect(() => {
     // Trigger animations after component mounts with a slight delay
@@ -59,6 +62,11 @@ const HeroSection: FC = () => {
   
   return (
     <section className="pt-24 pb-12 relative overflow-hidden">
+      {/* Wallet Button */}
+      <div className="absolute top-4 right-4 z-50">
+        <WalletMultiButton className="!bg-navy-700 !rounded-xl !py-2 !font-medium !transition-all !duration-300 hover:!bg-navy-600 active:!scale-95" />
+      </div>
+
       {/* Background elements with improved transitions */}
       <div className="absolute inset-0 z-0">
         <div className="absolute top-20 left-1/4 w-64 h-64 rounded-full bg-primary/5 blur-3xl transition-all duration-1000 ease-in-out"></div>
