@@ -9,7 +9,7 @@ const HeroSection: FC = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isPulsing, setIsPulsing] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
-  const [sortOption, setSortOption] = useState<'yums.fun' | 'pump.fun'>('yums.fun');
+  const [sortOption, setSortOption] = useState<'yums.fun tokens' | 'yums.fun' | 'pump.fun'>('yums.fun tokens');
   const [showSortOptions, setShowSortOptions] = useState(false);
   const { topToken, loading } = useTokenStats();
   
@@ -52,7 +52,7 @@ const HeroSection: FC = () => {
   };
   
   // Handle sort option change
-  const handleSortChange = (option: 'yums.fun' | 'pump.fun') => {
+  const handleSortChange = (option: 'yums.fun tokens' | 'yums.fun' | 'pump.fun') => {
     setSortOption(option);
     setShowSortOptions(false);
   };
@@ -211,8 +211,15 @@ const HeroSection: FC = () => {
               
               {/* Sort options dropdown */}
               {showSortOptions && (
-                <div className="absolute right-0 mt-2 w-40 rounded-lg shadow-lg bg-navy-700 border border-white/10 overflow-hidden z-20 transition-all duration-300 ease-out origin-top-right scale-100">
+                <div className="absolute right-0 mt-2 w-48 rounded-lg shadow-lg bg-navy-700 border border-white/10 overflow-hidden z-20 transition-all duration-300 ease-out origin-top-right scale-100">
                   <div className="py-1">
+                    <button
+                      onClick={() => handleSortChange('yums.fun tokens')}
+                      className={`flex items-center w-full px-4 py-2 text-sm ${sortOption === 'yums.fun tokens' ? 'text-primary bg-white/5' : 'text-white hover:bg-white/5'} transition-colors duration-200`}
+                    >
+                      <span className="mr-2">{sortOption === 'yums.fun tokens' && '✓'}</span>
+                      yums.fun tokens
+                    </button>
                     <button
                       onClick={() => handleSortChange('yums.fun')}
                       className={`flex items-center w-full px-4 py-2 text-sm ${sortOption === 'yums.fun' ? 'text-primary bg-white/5' : 'text-white hover:bg-white/5'} transition-colors duration-200`}
