@@ -76,27 +76,7 @@ export default function SupportPage() {
       <div className="container mx-auto px-4 py-10 max-w-4xl">
         <h1 className="text-3xl font-bold text-center mb-8">Support & FAQ</h1>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-          <div className="bg-navy-600 rounded-xl p-6 text-center">
-            <div className="inline-block p-4 rounded-full bg-navy-500 mb-4">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-              </svg>
-            </div>
-            <h2 className="text-xl font-bold mb-2">Discord Community</h2>
-            <p className="text-gray-300 mb-4">
-              Join our Discord server for community support, discussions, and the latest updates.
-            </p>
-            <a 
-              href="https://discord.gg/yumsfun" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="inline-block px-6 py-2 bg-primary text-navy-700 rounded-full font-medium hover:bg-primary-400 transition-all"
-            >
-              Join Discord
-            </a>
-          </div>
-          
+        <div className="grid grid-cols-1 gap-8 mb-12">
           <div className="bg-navy-600 rounded-xl p-6 text-center">
             <div className="inline-block p-4 rounded-full bg-navy-500 mb-4">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
