@@ -15,16 +15,21 @@ export interface CodexToken {
   description?: string;
 }
 
-// You'll need to replace this with your actual Codex.io API key
+// Get API key from environment variables
 const CODEX_API_KEY = process.env.NEXT_PUBLIC_CODEX_API_KEY || '';
 const CODEX_API_URL = 'https://api.codex.io';
+const CODEX_GRAPH_URL = 'https://graph.codex.io/graphql';
+
+// Check if API key is available
+const isApiKeyAvailable = CODEX_API_KEY && CODEX_API_KEY !== 'your_codex_api_key_here';
 
 // Create axios instance with default headers
 const codexApi = axios.create({
   baseURL: CODEX_API_URL,
   headers: {
-    'Authorization': `Bearer ${CODEX_API_KEY}`,
-    'Content-Type': 'application/json'
+    'Authorization': `${CODEX_API_KEY}`,
+    'Content-Type': 'application/json',
+    'Origin': typeof window !== 'undefined' ? window.location.origin : 'https://yums.fun'
   }
 });
 
@@ -34,6 +39,12 @@ const codexApi = axios.create({
  * @returns Array of token data
  */
 export async function getTrendingSolanaTokens(limit: number = 10): Promise<CodexToken[]> {
+  // If API key is not available, return mock data
+  if (!isApiKeyAvailable) {
+    console.log('Codex API key not found. Using mock data for trending tokens.');
+    return getMockSolanaTokens();
+  }
+  
   try {
     // This is a placeholder endpoint - replace with actual Codex.io endpoint
     const response = await codexApi.get('/tokens', {
@@ -48,6 +59,22 @@ export async function getTrendingSolanaTokens(limit: number = 10): Promise<Codex
     return response.data.tokens || [];
   } catch (error) {
     console.error('Error fetching trending Solana tokens:', error);
+    
+    // Check for specific error types
+    if (axios.isAxiosError(error) && error.response) {
+      const status = error.response.status;
+      const errorData = error.response.data;
+      
+      if (status === 401 || status === 403) {
+        if (errorData?.errors?.[0]?.message?.includes('unauthorized origin')) {
+          console.error('Unauthorized origin error. You need to register your application domain with Codex.io.');
+          console.error('Please visit https://www.codex.io/ to register your domain in your API key settings.');
+        } else if (errorData?.errors?.[0]?.message?.includes('API key was not found')) {
+          console.error('Invalid API key. Please check your API key and make sure it is correct.');
+        }
+      }
+    }
+    
     return getMockSolanaTokens(); // Fallback to mock data if API fails
   }
 }
@@ -58,6 +85,12 @@ export async function getTrendingSolanaTokens(limit: number = 10): Promise<Codex
  * @returns Array of token data
  */
 export async function getNewSolanaTokens(limit: number = 10): Promise<CodexToken[]> {
+  // If API key is not available, return mock data
+  if (!isApiKeyAvailable) {
+    console.log('Codex API key not found. Using mock data for new tokens.');
+    return getMockSolanaTokens();
+  }
+  
   try {
     // This is a placeholder endpoint - replace with actual Codex.io endpoint
     const response = await codexApi.get('/tokens', {
@@ -72,6 +105,22 @@ export async function getNewSolanaTokens(limit: number = 10): Promise<CodexToken
     return response.data.tokens || [];
   } catch (error) {
     console.error('Error fetching new Solana tokens:', error);
+    
+    // Check for specific error types
+    if (axios.isAxiosError(error) && error.response) {
+      const status = error.response.status;
+      const errorData = error.response.data;
+      
+      if (status === 401 || status === 403) {
+        if (errorData?.errors?.[0]?.message?.includes('unauthorized origin')) {
+          console.error('Unauthorized origin error. You need to register your application domain with Codex.io.');
+          console.error('Please visit https://www.codex.io/ to register your domain in your API key settings.');
+        } else if (errorData?.errors?.[0]?.message?.includes('API key was not found')) {
+          console.error('Invalid API key. Please check your API key and make sure it is correct.');
+        }
+      }
+    }
+    
     return getMockSolanaTokens(); // Fallback to mock data if API fails
   }
 }
@@ -82,11 +131,34 @@ export async function getNewSolanaTokens(limit: number = 10): Promise<CodexToken
  * @returns Token details
  */
 export async function getTokenDetails(address: string): Promise<CodexToken | null> {
+  // If API key is not available, return mock data
+  if (!isApiKeyAvailable) {
+    console.log(`Codex API key not found. Using mock data for token ${address}.`);
+    const mockTokens = getMockSolanaTokens();
+    return mockTokens.find(token => token.contractAddress === address) || null;
+  }
+  
   try {
     const response = await codexApi.get(`/tokens/${address}`);
     return response.data.token || null;
   } catch (error) {
     console.error(`Error fetching token details for ${address}:`, error);
+    
+    // Check for specific error types
+    if (axios.isAxiosError(error) && error.response) {
+      const status = error.response.status;
+      const errorData = error.response.data;
+      
+      if (status === 401 || status === 403) {
+        if (errorData?.errors?.[0]?.message?.includes('unauthorized origin')) {
+          console.error('Unauthorized origin error. You need to register your application domain with Codex.io.');
+          console.error('Please visit https://www.codex.io/ to register your domain in your API key settings.');
+        } else if (errorData?.errors?.[0]?.message?.includes('API key was not found')) {
+          console.error('Invalid API key. Please check your API key and make sure it is correct.');
+        }
+      }
+    }
+    
     return null;
   }
 }

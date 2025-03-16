@@ -112,17 +112,24 @@ export default function CodexTokens() {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<TabType>('trending');
   const [usingMockData, setUsingMockData] = useState(false);
+  const [errorType, setErrorType] = useState<'api_key' | 'origin' | 'other' | null>(null);
 
   useEffect(() => {
     async function fetchTokens() {
       setLoading(true);
+      setErrorType(null);
+      
       try {
         let fetchedTokens: CodexToken[];
         
         // Check if we're using the API key or mock data
         const apiKey = process.env.NEXT_PUBLIC_CODEX_API_KEY;
         const isUsingMockData = !apiKey || apiKey === 'your_codex_api_key_here';
-        setUsingMockData(isUsingMockData);
+        
+        if (isUsingMockData) {
+          setUsingMockData(true);
+          setErrorType('api_key');
+        }
         
         if (activeTab === 'trending') {
           fetchedTokens = await getTrendingSolanaTokens(6);
@@ -131,9 +138,26 @@ export default function CodexTokens() {
         }
         
         setTokens(fetchedTokens);
+        
+        // If we got tokens but we're still using mock data, it means the API call failed
+        if (fetchedTokens.length > 0 && fetchedTokens[0].id === 'sol') {
+          setUsingMockData(true);
+        }
       } catch (error) {
         console.error('Error fetching tokens:', error);
         setUsingMockData(true);
+        
+        // Check for specific error messages
+        if (error instanceof Error) {
+          const errorMessage = error.message.toLowerCase();
+          if (errorMessage.includes('api key was not found')) {
+            setErrorType('api_key');
+          } else if (errorMessage.includes('unauthorized origin')) {
+            setErrorType('origin');
+          } else {
+            setErrorType('other');
+          }
+        }
       } finally {
         setLoading(false);
       }
@@ -141,6 +165,30 @@ export default function CodexTokens() {
     
     fetchTokens();
   }, [activeTab]);
+
+  // Get the appropriate error message based on the error type
+  const getErrorMessage = () => {
+    switch (errorType) {
+      case 'api_key':
+        return (
+          <>
+            <strong>Note:</strong> Using mock data. To display real-time Solana tokens, add your Codex.io API key to the <code>.env.local</code> file.
+          </>
+        );
+      case 'origin':
+        return (
+          <>
+            <strong>Note:</strong> Using mock data. Your API key is valid, but your domain is not authorized. Please register your domain in your Codex.io API key settings.
+          </>
+        );
+      default:
+        return (
+          <>
+            <strong>Note:</strong> Using mock data. There was an error connecting to the Codex.io API.
+          </>
+        );
+    }
+  };
 
   return (
     <div className="py-12">
@@ -184,7 +232,7 @@ export default function CodexTokens() {
               <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
             </svg>
             <span>
-              <strong>Note:</strong> Using mock data. To display real-time Solana tokens, add your Codex.io API key to the <code>.env.local</code> file.
+              {getErrorMessage()}
             </span>
           </div>
         </motion.div>
