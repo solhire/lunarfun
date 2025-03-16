@@ -196,7 +196,7 @@ export default function Navbar() {
 
             {/* Social Links */}
             <a 
-              href="https://twitter.com/yumsdontfun" 
+              href="https://twitter.com/yumsdotfun" 
               target="_blank" 
               rel="noopener noreferrer" 
               className="hidden md:block bg-navy-400/70 hover:bg-navy-400/90 text-white rounded-full p-2 transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 relative group"

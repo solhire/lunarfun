@@ -12,21 +12,21 @@ export default function TokenSocials({ tokenSymbol }: TokenSocialsProps) {
   }> = {
     'BWIRT': {
       website: 'https://bwirt.io',
-      twitter: 'https://twitter.com/yumsdontfun',
+      twitter: 'https://twitter.com/yumsdotfun',
       telegram: 'https://t.me/bwirt_community',
     },
     'JUP': {
       website: 'https://jup.ag',
-      twitter: 'https://twitter.com/yumsdontfun',
+      twitter: 'https://twitter.com/yumsdotfun',
       github: 'https://github.com/jup-ag',
     },
     'FANCE': {
       website: 'https://fatvance.io',
-      twitter: 'https://twitter.com/yumsdontfun',
+      twitter: 'https://twitter.com/yumsdotfun',
       telegram: 'https://t.me/fatvance_community',
     },
     'DEFAULT': {
-      twitter: 'https://twitter.com/yumsdontfun',
+      twitter: 'https://twitter.com/yumsdotfun',
       website: 'https://solana.com',
     }
   };
