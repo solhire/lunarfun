@@ -1,6 +1,7 @@
 import Header from '@/components/Header';
 import HeroSection from '@/components/HeroSection';
 import TrendingTokens from '@/components/TrendingTokens';
+import CodexTokens from '@/components/CodexTokens';
 
 export default function Home() {
   return (
@@ -11,7 +12,12 @@ export default function Home() {
         {/* Hero Section */}
         <HeroSection />
         
-        {/* Token Listings */}
+        {/* Codex Solana Tokens */}
+        <div className="mb-20">
+          <CodexTokens />
+        </div>
+        
+        {/* Trending Tokens */}
         <div className="mb-20">
           <TrendingTokens />
         </div>
