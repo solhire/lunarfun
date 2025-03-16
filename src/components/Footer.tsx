@@ -43,13 +43,8 @@ export default function Footer() {
             <h3 className="text-sm font-semibold text-white tracking-wider uppercase">Connect</h3>
             <ul className="mt-4 space-y-2">
               <li>
-                <a href="https://twitter.com/yumsfun" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white text-sm">
+                <a href="https://twitter.com/yumsdontfun" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white text-sm">
                   Twitter
-                </a>
-              </li>
-              <li>
-                <a href="https://discord.gg/yumsfun" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white text-sm">
-                  Discord
                 </a>
               </li>
               <li>
