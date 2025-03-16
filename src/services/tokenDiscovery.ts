@@ -229,7 +229,7 @@ export const getMockTrendingTokens = (): TokenInfo[] => {
       volume24h: 120000,
       price: 0.037,
       priceChange24h: -2.5,
-      marketCap: 980000,
+      marketCap: 3700,
     },
     {
       address: 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',
@@ -302,7 +302,7 @@ export const getMockSolanaTokens = () => {
           volume24h: 120000,
           price: 0.037,
           priceChange24h: -2.5,
-          marketCap: 980000,
+          marketCap: 3700,
         }
       ]
     }

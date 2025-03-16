@@ -13,7 +13,7 @@ const FANCE_TOKEN_DATA: Token = {
   symbol: 'FANCE',
   logo: '/tokens/fv.jpg',
   description: 'FAT VANCE is a pioneering token in the Solana ecosystem, known for its innovative approach to DeFi and strong community engagement.',
-  marketCap: 3700000,
+  marketCap: 3700,
   priceChange24h: 15.8,
   createdAt: new Date('2023-12-01'),
   creatorAddress: '7nZbHGwzFJ9Dz8uBeRLnmJeBrUVMS8C8YoycjgE3XJ11',
