@@ -5,13 +5,14 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start -p",
+    "start": "next start",
     "lint": "next lint",
     "analyze": "ANALYZE=true next build",
     "postbuild": "next-sitemap",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@codex-data/sdk": "^1.0.5",
     "@heroicons/react": "^2.2.0",
     "@jnwng/walletconnect-solana": "^0.3.0",
     "@solana/spl-token": "^0.4.13",
@@ -22,6 +23,7 @@
     "@solana/wallet-adapter-walletconnect": "^0.1.16",
     "@solana/wallet-adapter-wallets": "^0.19.32",
     "@solana/web3.js": "^1.98.0",
+    "axios": "^1.8.3",
     "dotenv": "^16.4.7",
     "firebase": "^11.4.0",
     "framer-motion": "^12.5.0",
