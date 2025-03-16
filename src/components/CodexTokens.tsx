@@ -111,12 +111,18 @@ export default function CodexTokens() {
   const [tokens, setTokens] = useState<CodexToken[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<TabType>('trending');
+  const [usingMockData, setUsingMockData] = useState(false);
 
   useEffect(() => {
     async function fetchTokens() {
       setLoading(true);
       try {
         let fetchedTokens: CodexToken[];
+        
+        // Check if we're using the API key or mock data
+        const apiKey = process.env.NEXT_PUBLIC_CODEX_API_KEY;
+        const isUsingMockData = !apiKey || apiKey === 'your_codex_api_key_here';
+        setUsingMockData(isUsingMockData);
         
         if (activeTab === 'trending') {
           fetchedTokens = await getTrendingSolanaTokens(6);
@@ -127,6 +133,7 @@ export default function CodexTokens() {
         setTokens(fetchedTokens);
       } catch (error) {
         console.error('Error fetching tokens:', error);
+        setUsingMockData(true);
       } finally {
         setLoading(false);
       }
@@ -165,6 +172,23 @@ export default function CodexTokens() {
           </button>
         </div>
       </div>
+      
+      {usingMockData && (
+        <motion.div 
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-6 p-4 rounded-lg bg-yellow-500/10 border border-yellow-500/20 text-yellow-300"
+        >
+          <div className="flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+            </svg>
+            <span>
+              <strong>Note:</strong> Using mock data. To display real-time Solana tokens, add your Codex.io API key to the <code>.env.local</code> file.
+            </span>
+          </div>
+        </motion.div>
+      )}
       
       {loading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
