@@ -17,6 +17,7 @@ export interface TokenInfo {
   price: number;
   priceChange24h: number;
   marketCap: number;
+  source?: 'raydium' | 'pump';
 }
 
 export class TokenDiscoveryService {
@@ -203,7 +204,7 @@ export const getMockTrendingTokens = (): TokenInfo[] => {
       volume24h: 150000,
       price: 0.00002345,
       priceChange24h: 12.8,
-      marketCap: 1500000,
+      marketCap: 4200,
     },
     {
       address: 'JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN',
@@ -276,7 +277,7 @@ export const getMockSolanaTokens = () => {
           volume24h: 150000,
           price: 0.00002345,
           priceChange24h: 12.8,
-          marketCap: 1500000,
+          marketCap: 4200,
         },
         {
           address: 'JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN',
