@@ -32,6 +32,9 @@ export function useCodexWebsocket(options?: WebSocketOptions) {
   
   // Connect to the websocket
   const connect = () => {
+    // Only run in browser environment
+    if (typeof window === 'undefined') return;
+    
     if (socket) {
       // Already connected or connecting
       return;
@@ -211,7 +214,10 @@ export function NewTokenNotifications() {
   
   // Connect to websocket on component mount
   useEffect(() => {
-    connect();
+    // Only run in browser environment
+    if (typeof window !== 'undefined') {
+      connect();
+    }
     
     // Disconnect on unmount
     return () => {
