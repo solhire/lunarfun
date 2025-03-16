@@ -38,16 +38,16 @@ export default function RootLayout({
         className={`${inter.variable} ${spaceGrotesk.variable} antialiased bg-navy text-white min-h-screen`}
       >
         <Providers>
-          <Navbar />
-          <main className="flex-grow">
-            <WalletContextProvider>
-              <TokenDiscoveryProvider>
+          <WalletContextProvider>
+            <TokenDiscoveryProvider>
+              <Navbar />
+              <main className="flex-grow">
                 {children}
-              </TokenDiscoveryProvider>
-            </WalletContextProvider>
-          </main>
-          <Footer />
-          <NewTokenNotifications />
+              </main>
+              <Footer />
+              <NewTokenNotifications />
+            </TokenDiscoveryProvider>
+          </WalletContextProvider>
         </Providers>
       </body>
     </html>

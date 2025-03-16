@@ -2,10 +2,11 @@
 
 import { FC, ReactNode, useMemo } from 'react';
 import { ConnectionProvider, WalletProvider } from '@solana/wallet-adapter-react';
-import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
 import {
   PhantomWalletAdapter,
   SolflareWalletAdapter,
+  CoinbaseWalletAdapter,
+  LedgerWalletAdapter,
 } from '@solana/wallet-adapter-wallets';
 import { WalletModalProvider } from '@solana/wallet-adapter-react-ui';
 import { clusterApiUrl } from '@solana/web3.js';
@@ -18,8 +19,8 @@ interface WalletContextProviderProps {
 }
 
 const WalletContextProvider: FC<WalletContextProviderProps> = ({ children }) => {
-  // Set to 'devnet' for development, 'mainnet-beta' for production
-  const network = WalletAdapterNetwork.Devnet;
+  // Set to 'mainnet-beta' for production
+  const network = 'mainnet-beta';
   const endpoint = useMemo(() => clusterApiUrl(network), [network]);
 
   // Initialize all the supported wallet adapters
@@ -27,8 +28,10 @@ const WalletContextProvider: FC<WalletContextProviderProps> = ({ children }) => 
     () => [
       new PhantomWalletAdapter(),
       new SolflareWalletAdapter(),
+      new CoinbaseWalletAdapter(),
+      new LedgerWalletAdapter(),
     ],
-    [network]
+    []
   );
 
   return (
