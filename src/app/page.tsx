@@ -4,7 +4,7 @@ import TrendingTokens from '@/components/TrendingTokens';
 export default function Home() {
   return (
     <main className="min-h-screen bg-navy">
-      <div className="container mx-auto px-4 pt-16">
+      <div className="container mx-auto px-4 md:px-6 pt-16 max-w-7xl">
         {/* Hero Section */}
         <HeroSection />
         

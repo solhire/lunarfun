@@ -71,7 +71,7 @@ const HeroSection: FC = () => {
         <div className="absolute bottom-20 right-1/4 w-5 h-5 rounded-full bg-accent-red/50 animate-float delay-200 transition-all duration-700"></div>
       </div>
       
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-4 relative z-10 text-center">
         {/* Top Token Card */}
         <div className={`mb-12 transition-all duration-1000 ease-out ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
@@ -113,7 +113,7 @@ const HeroSection: FC = () => {
         
         {/* Main Heading with staggered animation */}
         <h1 
-          className={`text-4xl md:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary via-primary-light to-primary transition-all duration-1000 ease-out ${
+          className={`text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary via-primary-light to-primary transition-all duration-1000 ease-out mx-auto ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           }`}
         >
@@ -122,7 +122,7 @@ const HeroSection: FC = () => {
         
         {/* Subheading with staggered animation */}
         <p 
-          className={`text-lg text-foreground-secondary mb-10 max-w-2xl mx-auto transition-all duration-1000 ease-out delay-200 ${
+          className={`text-lg md:text-xl text-foreground-secondary mb-10 max-w-2xl mx-auto transition-all duration-1000 ease-out delay-200 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           }`}
         >
