@@ -56,6 +56,8 @@ export async function getTrendingSolanaTokens(limit: number = 10): Promise<Codex
   }
   
   try {
+    console.log('Fetching trending Solana tokens from Codex.io...');
+    
     // Use GraphQL API to fetch trending Solana tokens
     const response = await codexGraphApi.post('', {
       query: `{
@@ -66,34 +68,45 @@ export async function getTrendingSolanaTokens(limit: number = 10): Promise<Codex
             sortBy: VOLUME_USD
           }
         ) {
-          items {
-            address
-            name
-            symbol
-            price
-            marketCap
-            volume24h
-            priceChange24h
+          edges {
+            node {
+              address
+              name
+              symbol
+              price
+              marketCap
+              volume24h
+              priceChange24h
+            }
           }
         }
       }`
     });
     
-    if (response.data.data?.filterTokens?.items) {
-      return response.data.data.filterTokens.items.map((item: any) => ({
-        id: item.address,
-        name: item.name,
-        symbol: item.symbol,
-        price: item.price,
-        marketCap: item.marketCap,
-        priceChange24h: item.priceChange24h,
-        volume24h: item.volume24h,
-        contractAddress: item.address,
-        network: 'solana',
-        description: `${item.name} (${item.symbol}) token on Solana blockchain.`
-      }));
+    console.log('Response status:', response.status);
+    
+    if (response.data.data?.filterTokens?.edges) {
+      return response.data.data.filterTokens.edges.map((edge: any) => {
+        const item = edge.node;
+        return {
+          id: item.address,
+          name: item.name,
+          symbol: item.symbol,
+          price: item.price,
+          marketCap: item.marketCap,
+          priceChange24h: item.priceChange24h,
+          volume24h: item.volume24h,
+          contractAddress: item.address,
+          network: 'solana',
+          description: `${item.name} (${item.symbol}) token on Solana blockchain.`
+        };
+      });
+    } else if (response.data.errors) {
+      console.error('GraphQL errors:', response.data.errors);
+      return getMockSolanaTokens();
     }
     
+    console.log('No tokens found in response, using mock data');
     return getMockSolanaTokens();
   } catch (error) {
     console.error('Error fetching trending Solana tokens:', error);
@@ -102,6 +115,9 @@ export async function getTrendingSolanaTokens(limit: number = 10): Promise<Codex
     if (axios.isAxiosError(error) && error.response) {
       const status = error.response.status;
       const errorData = error.response.data;
+      
+      console.error('Status:', status);
+      console.error('Error data:', JSON.stringify(errorData, null, 2));
       
       if (status === 401 || status === 403) {
         if (errorData?.errors?.[0]?.message?.includes('unauthorized origin')) {
@@ -130,6 +146,8 @@ export async function getNewSolanaTokens(limit: number = 10): Promise<CodexToken
   }
   
   try {
+    console.log('Fetching new Solana tokens from Codex.io...');
+    
     // Use GraphQL API to fetch new Solana tokens
     const response = await codexGraphApi.post('', {
       query: `{
@@ -140,34 +158,45 @@ export async function getNewSolanaTokens(limit: number = 10): Promise<CodexToken
             sortBy: CREATED_AT
           }
         ) {
-          items {
-            address
-            name
-            symbol
-            price
-            marketCap
-            volume24h
-            priceChange24h
+          edges {
+            node {
+              address
+              name
+              symbol
+              price
+              marketCap
+              volume24h
+              priceChange24h
+            }
           }
         }
       }`
     });
     
-    if (response.data.data?.filterTokens?.items) {
-      return response.data.data.filterTokens.items.map((item: any) => ({
-        id: item.address,
-        name: item.name,
-        symbol: item.symbol,
-        price: item.price,
-        marketCap: item.marketCap,
-        priceChange24h: item.priceChange24h,
-        volume24h: item.volume24h,
-        contractAddress: item.address,
-        network: 'solana',
-        description: `${item.name} (${item.symbol}) token on Solana blockchain.`
-      }));
+    console.log('Response status:', response.status);
+    
+    if (response.data.data?.filterTokens?.edges) {
+      return response.data.data.filterTokens.edges.map((edge: any) => {
+        const item = edge.node;
+        return {
+          id: item.address,
+          name: item.name,
+          symbol: item.symbol,
+          price: item.price,
+          marketCap: item.marketCap,
+          priceChange24h: item.priceChange24h,
+          volume24h: item.volume24h,
+          contractAddress: item.address,
+          network: 'solana',
+          description: `${item.name} (${item.symbol}) token on Solana blockchain.`
+        };
+      });
+    } else if (response.data.errors) {
+      console.error('GraphQL errors:', response.data.errors);
+      return getMockSolanaTokens();
     }
     
+    console.log('No tokens found in response, using mock data');
     return getMockSolanaTokens();
   } catch (error) {
     console.error('Error fetching new Solana tokens:', error);
@@ -176,6 +205,9 @@ export async function getNewSolanaTokens(limit: number = 10): Promise<CodexToken
     if (axios.isAxiosError(error) && error.response) {
       const status = error.response.status;
       const errorData = error.response.data;
+      
+      console.error('Status:', status);
+      console.error('Error data:', JSON.stringify(errorData, null, 2));
       
       if (status === 401 || status === 403) {
         if (errorData?.errors?.[0]?.message?.includes('unauthorized origin')) {
@@ -205,6 +237,8 @@ export async function getTokenDetails(address: string): Promise<CodexToken | nul
   }
   
   try {
+    console.log(`Fetching token details for ${address} from Codex.io...`);
+    
     // Use GraphQL API to fetch token details
     const response = await codexGraphApi.post('', {
       query: `{
@@ -225,6 +259,8 @@ export async function getTokenDetails(address: string): Promise<CodexToken | nul
       }`
     });
     
+    console.log('Response status:', response.status);
+    
     if (response.data.data?.token) {
       const item = response.data.data.token;
       return {
@@ -239,8 +275,12 @@ export async function getTokenDetails(address: string): Promise<CodexToken | nul
         network: 'solana',
         description: `${item.name} (${item.symbol}) token on Solana blockchain.`
       };
+    } else if (response.data.errors) {
+      console.error('GraphQL errors:', response.data.errors);
+      return null;
     }
     
+    console.log('No token found in response');
     return null;
   } catch (error) {
     console.error(`Error fetching token details for ${address}:`, error);
@@ -249,6 +289,9 @@ export async function getTokenDetails(address: string): Promise<CodexToken | nul
     if (axios.isAxiosError(error) && error.response) {
       const status = error.response.status;
       const errorData = error.response.data;
+      
+      console.error('Status:', status);
+      console.error('Error data:', JSON.stringify(errorData, null, 2));
       
       if (status === 401 || status === 403) {
         if (errorData?.errors?.[0]?.message?.includes('unauthorized origin')) {
