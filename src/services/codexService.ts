@@ -27,9 +27,19 @@ const isApiKeyAvailable = CODEX_API_KEY && CODEX_API_KEY !== 'your_codex_api_key
 const codexApi = axios.create({
   baseURL: CODEX_API_URL,
   headers: {
-    'Authorization': `${CODEX_API_KEY}`,
+    'Authorization': CODEX_API_KEY,
     'Content-Type': 'application/json',
-    'Origin': typeof window !== 'undefined' ? window.location.origin : 'https://yums.fun'
+    'Origin': 'https://yums.fun'
+  }
+});
+
+// Create GraphQL axios instance
+const codexGraphApi = axios.create({
+  baseURL: CODEX_GRAPH_URL,
+  headers: {
+    'Authorization': CODEX_API_KEY,
+    'Content-Type': 'application/json',
+    'Origin': 'https://yums.fun'
   }
 });
 
@@ -46,17 +56,45 @@ export async function getTrendingSolanaTokens(limit: number = 10): Promise<Codex
   }
   
   try {
-    // This is a placeholder endpoint - replace with actual Codex.io endpoint
-    const response = await codexApi.get('/tokens', {
-      params: {
-        network: 'solana',
-        sort: 'volume',
-        order: 'desc',
-        limit
-      }
+    // Use GraphQL API to fetch trending Solana tokens
+    const response = await codexGraphApi.post('', {
+      query: `{
+        filterTokens(
+          input: {
+            networkIds: ["1399811149"],
+            limit: ${limit},
+            sortBy: VOLUME_USD
+          }
+        ) {
+          items {
+            address
+            name
+            symbol
+            price
+            marketCap
+            volume24h
+            priceChange24h
+          }
+        }
+      }`
     });
     
-    return response.data.tokens || [];
+    if (response.data.data?.filterTokens?.items) {
+      return response.data.data.filterTokens.items.map((item: any) => ({
+        id: item.address,
+        name: item.name,
+        symbol: item.symbol,
+        price: item.price,
+        marketCap: item.marketCap,
+        priceChange24h: item.priceChange24h,
+        volume24h: item.volume24h,
+        contractAddress: item.address,
+        network: 'solana',
+        description: `${item.name} (${item.symbol}) token on Solana blockchain.`
+      }));
+    }
+    
+    return getMockSolanaTokens();
   } catch (error) {
     console.error('Error fetching trending Solana tokens:', error);
     
@@ -92,17 +130,45 @@ export async function getNewSolanaTokens(limit: number = 10): Promise<CodexToken
   }
   
   try {
-    // This is a placeholder endpoint - replace with actual Codex.io endpoint
-    const response = await codexApi.get('/tokens', {
-      params: {
-        network: 'solana',
-        sort: 'created_at',
-        order: 'desc',
-        limit
-      }
+    // Use GraphQL API to fetch new Solana tokens
+    const response = await codexGraphApi.post('', {
+      query: `{
+        filterTokens(
+          input: {
+            networkIds: ["1399811149"],
+            limit: ${limit},
+            sortBy: CREATED_AT
+          }
+        ) {
+          items {
+            address
+            name
+            symbol
+            price
+            marketCap
+            volume24h
+            priceChange24h
+          }
+        }
+      }`
     });
     
-    return response.data.tokens || [];
+    if (response.data.data?.filterTokens?.items) {
+      return response.data.data.filterTokens.items.map((item: any) => ({
+        id: item.address,
+        name: item.name,
+        symbol: item.symbol,
+        price: item.price,
+        marketCap: item.marketCap,
+        priceChange24h: item.priceChange24h,
+        volume24h: item.volume24h,
+        contractAddress: item.address,
+        network: 'solana',
+        description: `${item.name} (${item.symbol}) token on Solana blockchain.`
+      }));
+    }
+    
+    return getMockSolanaTokens();
   } catch (error) {
     console.error('Error fetching new Solana tokens:', error);
     
@@ -139,8 +205,43 @@ export async function getTokenDetails(address: string): Promise<CodexToken | nul
   }
   
   try {
-    const response = await codexApi.get(`/tokens/${address}`);
-    return response.data.token || null;
+    // Use GraphQL API to fetch token details
+    const response = await codexGraphApi.post('', {
+      query: `{
+        token(
+          input: {
+            address: "${address}",
+            networkId: 1399811149
+          }
+        ) {
+          address
+          name
+          symbol
+          price
+          marketCap
+          volume24h
+          priceChange24h
+        }
+      }`
+    });
+    
+    if (response.data.data?.token) {
+      const item = response.data.data.token;
+      return {
+        id: item.address,
+        name: item.name,
+        symbol: item.symbol,
+        price: item.price,
+        marketCap: item.marketCap,
+        priceChange24h: item.priceChange24h,
+        volume24h: item.volume24h,
+        contractAddress: item.address,
+        network: 'solana',
+        description: `${item.name} (${item.symbol}) token on Solana blockchain.`
+      };
+    }
+    
+    return null;
   } catch (error) {
     console.error(`Error fetching token details for ${address}:`, error);
     
