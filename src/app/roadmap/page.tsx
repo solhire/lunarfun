@@ -6,16 +6,20 @@ import { motion, AnimatePresence, useScroll, useTransform, useSpring, Variants }
 import Header from '@/components/Header';
 import { ArrowRightIcon, SparklesIcon } from '@heroicons/react/24/outline';
 
-// Roadmap data with 3 months of milestones
+// Updated roadmap data with Q2 and Q3 2025
 const ROADMAP_DATA = [
   {
-    title: "Community & Stability",
+    title: "Q2 2025: Launch & Core Features",
     items: [
-      "Launch improved trending algorithm",
-      "Enhance creator verification system",
-      "Improve mobile responsiveness",
-      "Add multi-language support",
-      "Implement community voting on trending items"
+      "Security First Approach",
+      "Fair Launch Protocol: Ensuring equal access for all traders at token creation",
+      "Basic Rug Protection: Implementing initial safeguards against common exit scams",
+      "Creator Verification System: Initial verification layer for token creators",
+      "Transparency Dashboard: Real-time visibility into contract interactions",
+      "Platform stability and performance optimization",
+      "Mobile-responsive design implementation",
+      "Community channels establishment (Discord, Telegram)",
+      "Initial trading features and token creation system"
     ],
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
@@ -32,13 +36,17 @@ const ROADMAP_DATA = [
     status: "In Progress"
   },
   {
-    title: "Trading Enhancements",
+    title: "Q3 2025: Advanced Security & History Tracking",
     items: [
-      "Launch advanced trading features",
-      "Add price charts & technical indicators",
-      "Implement batch trades & automated tools",
-      "Integrate additional payment methods",
-      "Launch mobile trading application"
+      "Rug Protection Suite: Token Contract Scanning with social media verification",
+      "Liquidity Locking Options: Built-in timelock mechanisms with transparent opt-out",
+      "Owner Action Alerts: Real-time notifications of suspicious activities",
+      "Risk Assessment Scores: Automated token risk evaluation system",
+      "Token Timeline: Complete historical record of each token's lifecycle",
+      "Creator History Database: Cross-referencing system for developer addresses",
+      "Rug Pool Archive: Searchable database of identified rug pulls",
+      "Wallet Reputation System: Trust scores based on historical behavior",
+      "Advanced charts and trading tools"
     ],
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
@@ -54,13 +62,17 @@ const ROADMAP_DATA = [
     status: "Upcoming"
   },
   {
-    title: "Creator Empowerment",
+    title: "Q4 2025: Platform Enhancements",
     items: [
-      "Launch creator dashboard analytics",
-      "Add customizable creator storefronts",
-      "Implement content monetization tools",
-      "Launch digital asset management platform",
-      "Enable cross-platform content integration"
+      "Enhanced token discoverability features",
+      "Customizable watchlists with alert systems",
+      "Advanced trading analytics dashboard",
+      "Cross-chain integration capabilities",
+      "Expanded payment options and fiat on-ramps",
+      "Community governance features",
+      "Developer API and integration tools",
+      "Mobile app launch with push notifications",
+      "Expanded educational resources and documentation"
     ],
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
@@ -292,7 +304,7 @@ export default function RoadmapPage() {
                 
                 <div className="flex flex-col items-center sm:items-start">
                   <span className={`text-sm font-medium ${activeIndex === index ? phase.color : ''}`}>
-                    {phase.title}
+                    {phase.title.split(':')[0]}
                   </span>
                   <span className="text-xs text-gray-500">{phase.status}</span>
                 </div>
