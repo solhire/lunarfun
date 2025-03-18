@@ -30,9 +30,9 @@ const StandaloneLogoPage: FC = () => {
           <div className="mt-8">
             <Link 
               href="/secret-logo" 
-              className="text-primary hover:text-primary-300 transition-colors flex items-center justify-center gap-2"
+              className="text-red-500 hover:text-red-400 transition-colors flex items-center justify-center gap-2"
             >
-              <span className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center">
+              <span className="w-5 h-5 rounded-full bg-red-500/20 flex items-center justify-center">
                 ←
               </span>
               <span>Back to Logo Page</span>

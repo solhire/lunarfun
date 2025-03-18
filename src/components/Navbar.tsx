@@ -70,19 +70,7 @@ export default function Navbar() {
         <div className="container mx-auto px-4 py-3 flex items-center justify-between">
           {/* Left: Logo and Navigation */}
           <div className="flex items-center">
-            {/* Logo */}
-            <Link href="/" className="flex items-center mr-8 group" onClick={() => handleLinkClick('/')}>
-              <div className="relative w-8 h-8 mr-2 transform transition-transform group-hover:scale-110">
-                <div className="absolute inset-0 bg-primary rounded-full group-hover:animate-pulse"></div>
-                <div className="absolute inset-1 bg-navy-500 rounded-full flex items-center justify-center text-primary font-bold">Y</div>
-              </div>
-              <div className="flex items-baseline">
-                <span className="text-primary text-xl font-bold tracking-tight group-hover:text-primary-light transition-colors">yums</span>
-                <span className="text-white text-xl font-bold tracking-tight group-hover:text-gray-200 transition-colors">.fun</span>
-              </div>
-            </Link>
-
-            {/* Desktop Navigation */}
+            {/* Logo - Removed */}
             <div className="hidden md:flex items-center space-x-6">
               <Link 
                 href="/" 

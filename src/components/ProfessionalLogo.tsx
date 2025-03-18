@@ -44,10 +44,12 @@ const ProfessionalLogo: React.FC<ProfessionalLogoProps> = ({
     if (onClick) onClick();
   };
   
-  // Colors from the theme
-  const primaryColor = "#FFD100";
-  const primaryLight = "#FFE666";
-  const primaryDark = "#E6BC00";
+  // Colors from the theme - Updated to black and red
+  const primaryColor = "#FF0000";
+  const primaryLight = "#FF3333";
+  const primaryDark = "#CC0000";
+  const secondaryColor = "#000000";
+  const secondaryLight = "#333333";
   const navyColor = "#12131A";
   const navyLight = "#2A2D3A";
   const accentGreen = "#50E3C2";
@@ -243,6 +245,96 @@ const ProfessionalLogo: React.FC<ProfessionalLogoProps> = ({
     Z
   `;
   
+  // SVG definitions for gradients and patterns
+  const svgDefs = (
+    <defs>
+      {/* Particle gradients */}
+      <radialGradient id="particleGradient" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stopColor={primaryLight} />
+        <stop offset="100%" stopColor={primaryColor} />
+      </radialGradient>
+      
+      {/* Small squares grid pattern */}
+      <pattern
+        id="gridPattern"
+        width="8"
+        height="8"
+        patternUnits="userSpaceOnUse"
+        patternTransform="rotate(45)"
+      >
+        <rect width="1" height="1" fill={secondaryColor} />
+      </pattern>
+      
+      {/* Glowing effect for the particles */}
+      <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+        <feGaussianBlur stdDeviation="2.5" result="blur" />
+        <feColorMatrix
+          in="blur"
+          type="matrix"
+          values="0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0.3 0"
+          result="glow"
+        />
+        <feMerge>
+          <feMergeNode in="glow" />
+          <feMergeNode in="SourceGraphic" />
+        </feMerge>
+      </filter>
+      
+      {/* Coin gradient */}
+      <linearGradient id="coinGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor={secondaryLight} />
+        <stop offset="100%" stopColor={secondaryColor} />
+      </linearGradient>
+      
+      {/* Inner coin gradient - changing from red to black */}
+      <radialGradient id="innerGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+        <stop offset="0%" stopColor={secondaryLight} />
+        <stop offset="100%" stopColor={secondaryColor} />
+      </radialGradient>
+      
+      {/* Grid on the primary coin */}
+      <pattern
+        id="gridPatternMain"
+        width="10"
+        height="10"
+        patternUnits="userSpaceOnUse"
+        patternTransform="rotate(45)"
+      >
+        <rect width="1" height="1" fill={secondaryLight} />
+      </pattern>
+      
+      {/* Shine effect on the coin */}
+      <linearGradient id="shineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stopColor={primaryColor} stopOpacity="0" />
+        <stop offset="50%" stopColor={primaryLight} stopOpacity="0.5" />
+        <stop offset="100%" stopColor={primaryColor} stopOpacity="0" />
+      </linearGradient>
+      
+      {/* Y gradient */}
+      <linearGradient id="yGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor={primaryLight} />
+        <stop offset="100%" stopColor={primaryDark} />
+      </linearGradient>
+      
+      {/* Y vertical gradient */}
+      <linearGradient id="yVerticalGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stopColor={primaryLight} />
+        <stop offset="100%" stopColor={primaryDark} />
+      </linearGradient>
+      
+      {/* Text gradient */}
+      <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor={primaryLight} />
+        <stop offset="100%" stopColor={primaryDark} />
+      </linearGradient>
+      
+      {/* Shadow for the coin */}
+      <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+        <feDropShadow dx="0" dy="2" stdDeviation="2" floodColor={secondaryColor} floodOpacity="0.3" />
+      </filter>
+    </defs>
+  );
+  
   return (
     <div 
       style={{ width: size, height: size }}
@@ -258,85 +350,14 @@ const ProfessionalLogo: React.FC<ProfessionalLogoProps> = ({
         xmlns="http://www.w3.org/2000/svg"
         className="cursor-pointer"
       >
-        {/* Definitions */}
-        <defs>
-          {/* Main Coin Gradient */}
-          <linearGradient id="coinGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor={primaryLight} />
-            <stop offset="50%" stopColor={primaryColor} />
-            <stop offset="100%" stopColor={primaryDark} />
-          </linearGradient>
-          
-          {/* Inner Circle Gradient */}
-          <radialGradient id="innerGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
-            <stop offset="0%" stopColor={navyLight} />
-            <stop offset="100%" stopColor={navyColor} />
-          </radialGradient>
-          
-          {/* Glow Effect */}
-          <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="10" result="blur" />
-            <feComposite in="SourceGraphic" in2="blur" operator="over" />
-          </filter>
-          
-          {/* Grid Pattern */}
-          <pattern id="gridPattern" patternUnits="userSpaceOnUse" width="20" height="20" patternTransform="rotate(45)">
-            <line x1="0" y1="0" x2="0" y2="20" stroke={primaryColor} strokeWidth="0.5" strokeOpacity="0.1" />
-            <line x1="0" y1="0" x2="20" y2="0" stroke={primaryColor} strokeWidth="0.5" strokeOpacity="0.1" />
-          </pattern>
-          
-          {/* Shine Effect */}
-          <linearGradient id="shineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="rgba(255,255,255,0)" />
-            <stop offset="50%" stopColor="rgba(255,255,255,0.3)" />
-            <stop offset="100%" stopColor="rgba(255,255,255,0)" />
-          </linearGradient>
-          
-          {/* Y Gradient */}
-          <linearGradient id="yGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor={primaryLight} />
-            <stop offset="50%" stopColor={primaryColor} />
-            <stop offset="100%" stopColor={primaryDark} />
-          </linearGradient>
-          
-          {/* Y Vertical Gradient */}
-          <linearGradient id="yVerticalGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor={primaryLight} />
-            <stop offset="100%" stopColor={primaryDark} />
-          </linearGradient>
-          
-          {/* Food Element Gradients */}
-          <linearGradient id="plateGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor={primaryLight} />
-            <stop offset="70%" stopColor={primaryDark} />
-            <stop offset="100%" stopColor={primaryDark} />
-          </linearGradient>
-          
-          <linearGradient id="utensilGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#FFFFFF" />
-            <stop offset="100%" stopColor="#E0E0E0" />
-          </linearGradient>
-          
-          {/* 3D Effect */}
-          <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-            <feDropShadow dx="2" dy="2" stdDeviation="2" flood-color={navyColor} flood-opacity="0.5" />
-          </filter>
-          
-          {/* Metallic Effect */}
-          <linearGradient id="metallicGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor={primaryDark} />
-            <stop offset="30%" stopColor={primaryLight} />
-            <stop offset="70%" stopColor={primaryLight} />
-            <stop offset="100%" stopColor={primaryDark} />
-          </linearGradient>
-        </defs>
+        {svgDefs}
         
         {/* Glow Background */}
         <motion.circle
           cx={centerX}
           cy={centerY}
           r={mainRadius + 5}
-          fill={primaryColor}
+          fill={secondaryColor}
           opacity={0.2}
           filter="url(#glow)"
           variants={glowVariants}

@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 import { Connection, clusterApiUrl } from '@solana/web3.js';
 import { TokenListProvider, TokenInfo as SplTokenInfo } from '@solana/spl-token-registry';
