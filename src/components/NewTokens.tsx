@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 import { ref, onValue, query, orderByChild, limitToLast } from 'firebase/database';
 import { db } from '@/firebase/config';
