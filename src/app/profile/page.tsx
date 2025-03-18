@@ -23,11 +23,11 @@ export default function ProfilePage() {
                     className="h-24 w-24 rounded-full object-cover border-2 border-primary"
                     width={96}
                     height={96}
-                    src="/profile.jpg"
+                    src="/pfp2.jpeg"
                     alt="Profile"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
-                      target.src = '/profile.jpg';
+                      target.src = '/pfp2.jpeg';
                     }}
                   />
                 </div>
