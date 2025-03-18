@@ -12,10 +12,10 @@ interface Stat {
 
 const PlatformStats: FC = () => {
   const [stats, setStats] = useState<Stat[]>([
-    { label: 'Tokens Created', value: 0, suffix: '+', increment: 1235 },
-    { label: 'Total Volume', value: 0, prefix: '$', suffix: 'M+', increment: 42.5 },
-    { label: 'Users', value: 0, suffix: 'K+', increment: 18.7 },
-    { label: 'Transactions', value: 0, suffix: 'K+', increment: 155 }
+    { label: 'Tokens Created', value: 0, suffix: '+', increment: 10000 },
+    { label: 'Total Volume', value: 0, prefix: '$', suffix: 'M+', increment: 25 },
+    { label: 'Users', value: 0, suffix: 'K+', increment: 50 },
+    { label: 'Transactions', value: 0, suffix: 'K+', increment: 200 }
   ]);
   
   useEffect(() => {

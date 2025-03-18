@@ -6,6 +6,7 @@ import { useWallet } from '@solana/wallet-adapter-react';
 import HowItWorksModal from '@/components/HowItWorksModal';
 import WalletStatus from '@/components/WalletStatus';
 import ClientWalletButton from '@/components/ClientWalletButton';
+import ProfessionalLogo from '@/components/ProfessionalLogo';
 
 export default function Navbar() {
   const { publicKey } = useWallet();
@@ -70,7 +71,16 @@ export default function Navbar() {
         <div className="container mx-auto px-4 py-3 flex items-center justify-between">
           {/* Left: Logo and Navigation */}
           <div className="flex items-center">
-            {/* Logo - Removed */}
+            {/* Logo added back */}
+            <Link href="/" className="flex items-center mr-6">
+              <div className="mr-2">
+                <ProfessionalLogo size={24} showText={false} autoAnimate={false} />
+              </div>
+              <span className="text-lg font-bold">
+                <span className="text-primary">yums</span>
+                <span className="text-white">.fun</span>
+              </span>
+            </Link>
             <div className="hidden md:flex items-center space-x-6">
               <Link 
                 href="/" 
@@ -83,9 +93,9 @@ export default function Navbar() {
               >
                 home
                 {activeLink === '/' && (
-                  <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-primary rounded-full"></span>
+                  <span className="absolute -bottom-1 left-0 w-full h-1 bg-primary rounded-full shadow-sm shadow-primary/50"></span>
                 )}
-                <span className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 w-1.5 h-1.5 bg-primary/40 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                <span className="absolute -bottom-1 left-0 w-full h-1 bg-primary rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out"></span>
               </Link>
               <Link 
                 href="/explore" 
@@ -98,9 +108,9 @@ export default function Navbar() {
               >
                 explore
                 {activeLink === '/explore' && (
-                  <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-primary rounded-full"></span>
+                  <span className="absolute -bottom-1 left-0 w-full h-1 bg-primary rounded-full shadow-sm shadow-primary/50"></span>
                 )}
-                <span className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 w-1.5 h-1.5 bg-primary/40 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                <span className="absolute -bottom-1 left-0 w-full h-1 bg-primary rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out"></span>
               </Link>
               <Link 
                 href="/roadmap" 
@@ -113,9 +123,9 @@ export default function Navbar() {
               >
                 roadmap
                 {activeLink === '/roadmap' && (
-                  <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-primary rounded-full"></span>
+                  <span className="absolute -bottom-1 left-0 w-full h-1 bg-primary rounded-full shadow-sm shadow-primary/50"></span>
                 )}
-                <span className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 w-1.5 h-1.5 bg-primary/40 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                <span className="absolute -bottom-1 left-0 w-full h-1 bg-primary rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out"></span>
               </Link>
               <Link 
                 href="/watchlist" 
@@ -128,9 +138,9 @@ export default function Navbar() {
               >
                 watchlist
                 {activeLink === '/watchlist' && (
-                  <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-primary rounded-full"></span>
+                  <span className="absolute -bottom-1 left-0 w-full h-1 bg-primary rounded-full shadow-sm shadow-primary/50"></span>
                 )}
-                <span className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 w-1.5 h-1.5 bg-primary/40 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                <span className="absolute -bottom-1 left-0 w-full h-1 bg-primary rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out"></span>
               </Link>
               <div className="relative group">
                 <HowItWorksModal 
@@ -140,7 +150,10 @@ export default function Navbar() {
                       : 'text-white hover:text-primary'
                   }`} 
                 />
-                <span className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 w-1.5 h-1.5 bg-primary/40 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                <span className="absolute -bottom-1 left-0 w-full h-1 bg-primary rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out"></span>
+                {activeLink === '/how-it-works' && (
+                  <span className="absolute -bottom-1 left-0 w-full h-1 bg-primary rounded-full shadow-sm shadow-primary/50"></span>
+                )}
               </div>
               <Link 
                 href="/support" 
@@ -153,9 +166,9 @@ export default function Navbar() {
               >
                 support
                 {activeLink === '/support' && (
-                  <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-primary rounded-full"></span>
+                  <span className="absolute -bottom-1 left-0 w-full h-1 bg-primary rounded-full shadow-sm shadow-primary/50"></span>
                 )}
-                <span className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 w-1.5 h-1.5 bg-primary/40 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                <span className="absolute -bottom-1 left-0 w-full h-1 bg-primary rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out"></span>
               </Link>
             </div>
           </div>
@@ -231,6 +244,17 @@ export default function Navbar() {
         {isMenuOpen && (
           <div className="md:hidden bg-navy-400/95 backdrop-blur-md py-4 px-4 border-t border-navy-300/20 animate-slideIn">
             <nav className="flex flex-col space-y-4">
+              {/* Mobile Logo */}
+              <Link href="/" className="flex items-center mb-4 pb-3 border-b border-navy-300/20" onClick={() => setIsMenuOpen(false)}>
+                <div className="mr-2">
+                  <ProfessionalLogo size={20} showText={false} autoAnimate={false} />
+                </div>
+                <span className="text-base font-bold">
+                  <span className="text-primary">yums</span>
+                  <span className="text-white">.fun</span>
+                </span>
+              </Link>
+              
               {/* Mobile Wallet Status */}
               <div className="mb-2">
                 <WalletStatus />
@@ -238,57 +262,87 @@ export default function Navbar() {
               
               <Link 
                 href="/" 
-                className={`text-sm font-medium py-2 border-b border-navy-300/20 transition-colors ${
+                className={`relative text-sm font-medium py-2 border-b border-navy-300/20 transition-colors ${
                   activeLink === '/' ? 'text-primary' : 'text-white hover:text-primary'
                 }`}
                 onClick={() => handleLinkClick('/')}
               >
                 Home
+                <div className="h-0.5 w-full mt-1">
+                  {activeLink === '/' && (
+                    <span className="absolute bottom-0 left-0 w-1/2 h-1 bg-primary rounded-full shadow-sm shadow-primary/50"></span>
+                  )}
+                </div>
               </Link>
               <Link 
                 href="/explore" 
-                className={`text-sm font-medium py-2 border-b border-navy-300/20 transition-colors ${
+                className={`relative text-sm font-medium py-2 border-b border-navy-300/20 transition-colors ${
                   activeLink === '/explore' ? 'text-primary' : 'text-white hover:text-primary'
                 }`}
                 onClick={() => handleLinkClick('/explore')}
               >
                 Explore
+                <div className="h-0.5 w-full mt-1">
+                  {activeLink === '/explore' && (
+                    <span className="absolute bottom-0 left-0 w-1/2 h-1 bg-primary rounded-full shadow-sm shadow-primary/50"></span>
+                  )}
+                </div>
               </Link>
               <Link 
                 href="/roadmap" 
-                className={`text-sm font-medium py-2 border-b border-navy-300/20 transition-colors ${
+                className={`relative text-sm font-medium py-2 border-b border-navy-300/20 transition-colors ${
                   activeLink === '/roadmap' ? 'text-primary' : 'text-white hover:text-primary'
                 }`}
                 onClick={() => handleLinkClick('/roadmap')}
               >
                 Roadmap
+                <div className="h-0.5 w-full mt-1">
+                  {activeLink === '/roadmap' && (
+                    <span className="absolute bottom-0 left-0 w-1/2 h-1 bg-primary rounded-full shadow-sm shadow-primary/50"></span>
+                  )}
+                </div>
               </Link>
               <Link 
                 href="/watchlist" 
-                className={`text-sm font-medium py-2 border-b border-navy-300/20 transition-colors ${
+                className={`relative text-sm font-medium py-2 border-b border-navy-300/20 transition-colors ${
                   activeLink === '/watchlist' ? 'text-primary' : 'text-white hover:text-primary'
                 }`}
                 onClick={() => handleLinkClick('/watchlist')}
               >
                 Watchlist
+                <div className="h-0.5 w-full mt-1">
+                  {activeLink === '/watchlist' && (
+                    <span className="absolute bottom-0 left-0 w-1/2 h-1 bg-primary rounded-full shadow-sm shadow-primary/50"></span>
+                  )}
+                </div>
               </Link>
               <div 
                 onClick={() => setIsMenuOpen(false)} 
-                className={`py-2 border-b border-navy-300/20 transition-colors ${
+                className={`relative py-2 border-b border-navy-300/20 transition-colors ${
                   activeLink === '/how-it-works' ? 'text-primary' : 'text-white hover:text-primary'
                 }`}
               >
                 <HowItWorksModal buttonClassName="text-inherit bg-transparent w-full text-left" />
+                <div className="h-0.5 w-full mt-1">
+                  {activeLink === '/how-it-works' && (
+                    <span className="absolute bottom-0 left-0 w-1/2 h-1 bg-primary rounded-full shadow-sm shadow-primary/50"></span>
+                  )}
+                </div>
               </div>
               
               <Link 
                 href="/support" 
-                className={`text-sm font-medium py-2 transition-colors ${
+                className={`relative text-sm font-medium py-2 border-b border-navy-300/20 transition-colors ${
                   activeLink === '/support' ? 'text-primary' : 'text-white hover:text-primary'
                 }`}
                 onClick={() => handleLinkClick('/support')}
               >
                 Support
+                <div className="h-0.5 w-full mt-1">
+                  {activeLink === '/support' && (
+                    <span className="absolute bottom-0 left-0 w-1/2 h-1 bg-primary rounded-full shadow-sm shadow-primary/50"></span>
+                  )}
+                </div>
               </Link>
               
               <Link 

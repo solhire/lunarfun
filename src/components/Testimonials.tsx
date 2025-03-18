@@ -59,7 +59,7 @@ const TestimonialCard: FC<{ testimonial: Testimonial; isActive: boolean }> = ({ 
             className="object-cover"
             onError={(e) => {
               const target = e.target as HTMLImageElement;
-              target.src = '/testimonials/default-avatar.jpg';
+              target.src = '/pfp.jpg';
             }}
           />
         </div>
@@ -77,7 +77,7 @@ const TestimonialCard: FC<{ testimonial: Testimonial; isActive: boolean }> = ({ 
                     className="object-cover"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
-                      target.src = '/testimonials/default-project.jpg';
+                      target.src = '/pfp.jpg';
                     }}
                   />
                 </div>
@@ -145,7 +145,7 @@ const Testimonials: FC = () => {
         
         <div className="mt-16 text-center">
           <div className="inline-flex items-center px-4 py-2 rounded-full bg-navy-700/50 border border-navy-600/50">
-            <span className="text-primary font-medium mr-2">1,200+</span>
+            <span className="text-primary font-medium mr-2">10,000+</span>
             <span className="text-gray-400 text-sm">Tokens launched on Yums.fun</span>
           </div>
         </div>

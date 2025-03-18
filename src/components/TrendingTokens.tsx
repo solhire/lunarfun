@@ -3,10 +3,11 @@
 import { FC, useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { getTokensRealtime } from '@/firebase/tokenService';
+import { getTokensRealtimeFirestore } from '@/firebase/tokenService';
 import { getTokensRealtimeWithFirestore } from '@/firebase/firestoreService';
 import { Token } from '@/firebase/types';
 import { Timestamp } from 'firebase/firestore';
+import LoadingIndicator from '@/components/LoadingIndicator';
 
 // Mock tokens array with correct image paths
 const MOCK_TOKENS: Token[] = [
@@ -15,7 +16,7 @@ const MOCK_TOKENS: Token[] = [
     name: 'BWIRT',
     symbol: 'BWIRT',
     logo: '/tokens/bwirt.jpg',
-    marketCap: 4200000,
+    marketCap: 4200,
     priceChange24h: 8.3,
     createdAt: new Date(),
     creatorAddress: '9XyPJ7WsYsQF3hGrFqgMrL9LGy7nKeDVM5L3F9WvVJjZ',
@@ -26,7 +27,7 @@ const MOCK_TOKENS: Token[] = [
     name: 'FAT VANCE',
     symbol: 'FANCE',
     logo: '/tokens/fv.jpg',
-    marketCap: 3700000,
+    marketCap: 3700,
     priceChange24h: 15.8,
     createdAt: new Date(),
     creatorAddress: '7nZbHGwzFJ9Dz8uBeRLnmJeBrUVMS8C8YoycjgE3XJ11',
@@ -37,7 +38,7 @@ const MOCK_TOKENS: Token[] = [
     name: 'Wrapped SOL',
     symbol: 'SOL',
     logo: '/tokens/sol.png',
-    marketCap: 40000000,
+    marketCap: 9500,
     priceChange24h: 2.5,
     createdAt: new Date(),
     creatorAddress: 'So11111111111111111111111111111111111111112',
@@ -50,7 +51,7 @@ const MOCK_TOKENS: Token[] = [
     name: 'USD Coin',
     symbol: 'USDC',
     logo: '/tokens/usdc.png',
-    marketCap: 28400000,
+    marketCap: 8750,
     priceChange24h: 0.1,
     createdAt: new Date(),
     creatorAddress: 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',
@@ -190,21 +191,18 @@ const TrendingTokens: FC = () => {
   const [activeTab, setActiveTab] = useState('explore');
   const [showAnimations, setShowAnimations] = useState(true);
   const [sortType, setSort] = useState('featured');
-  const [tokens, setTokens] = useState<Token[]>(MOCK_TOKENS);
-  const [loading, setLoading] = useState(true);
+  const [tokens, setTokens] = useState<Token[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
   
-  // Subscribe to real-time token updates
   useEffect(() => {
-    // Set loading to false after a short delay to simulate loading
-    const timer = setTimeout(() => {
-      setLoading(false);
-      // Always use mock tokens
-      setTokens(MOCK_TOKENS);
-      console.log('Using mock tokens:', MOCK_TOKENS);
-    }, 1500);
+    const unsubscribe = getTokensRealtimeFirestore((updatedTokens) => {
+      setTokens(updatedTokens);
+      setIsLoading(false);
+    }, 8); // Get up to 8 trending tokens
     
-    return () => clearTimeout(timer);
+    // Clean up subscription on unmount
+    return () => unsubscribe();
   }, []);
   
   // Helper function to safely get timestamp as number
@@ -228,8 +226,8 @@ const TrendingTokens: FC = () => {
     } else {
       setSelectedTag(tag);
       // Simulate loading when changing tags
-      setLoading(true);
-      setTimeout(() => setLoading(false), 500);
+      setIsLoading(true);
+      setTimeout(() => setIsLoading(false), 500);
     }
   };
   
@@ -262,6 +260,14 @@ const TrendingTokens: FC = () => {
 
   // Define trending tags
   const trendingTags = ['popular', 'trending', 'new', 'cat', '1st', 'dog', 'ceo', 'solana', 'ceo killer', 'killer', 'memecoin'];
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center py-10">
+        <LoadingIndicator message="Loading tokens..." />
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -376,71 +382,55 @@ const TrendingTokens: FC = () => {
       )}
       
       {/* Token List */}
-      <div>
-        {loading ? (
-          // Loading skeleton with shimmer effect
-          <div className="space-y-3">
-            {[...Array(5)].map((_, i) => (
-              <div key={i} className="bg-navy-400/30 rounded-xl p-4 animate-pulse relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent animate-shimmer" style={{ backgroundSize: '200% 100%' }}></div>
-                <div className="flex items-center gap-3 relative">
-                  <div className="w-12 h-12 rounded-full bg-navy-500/70"></div>
-                  <div className="flex-1">
-                    <div className="h-4 bg-navy-500/70 rounded mb-2 w-2/3"></div>
-                    <div className="h-3 bg-navy-500/70 rounded w-full"></div>
-                    <div className="h-3 bg-navy-500/70 rounded w-1/2 mt-2"></div>
-                  </div>
-                  <div className="w-16">
-                    <div className="h-4 bg-navy-500/70 rounded mb-2 w-full"></div>
-                    <div className="h-3 bg-navy-500/70 rounded w-2/3 ml-auto"></div>
-                  </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        {sortedTokens.map((token) => (
+          <Link 
+            href={`/token/${token.id}`} 
+            key={token.id}
+            className="bg-black/40 border border-gray-800 rounded-xl overflow-hidden hover:border-primary/30 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+          >
+            <div className="p-4">
+              <div className="flex items-center mb-3">
+                <div className="relative w-10 h-10 rounded-full overflow-hidden bg-gray-800 mr-3">
+                  {token.logo ? (
+                    <Image 
+                      src={token.logo}
+                      alt={token.name} 
+                      fill 
+                      className="object-cover"
+                      onError={(e) => {
+                        // Fallback for broken images
+                        (e.target as HTMLImageElement).src = `/placeholder.png`;
+                      }}
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-primary font-bold">
+                      {token.symbol.substring(0, 2)}
+                    </div>
+                  )}
+                </div>
+                <div>
+                  <h3 className="font-bold text-white">{token.name}</h3>
+                  <p className="text-sm text-gray-400">${token.symbol}</p>
                 </div>
               </div>
-            ))}
-          </div>
-        ) : (
-          <>
-            {sortedTokens.length > 0 ? (
-              <div className="space-y-3">
-                {sortedTokens.map((token, index) => (
-                  <CompactTokenCard key={token.id} token={token} index={index} />
-                ))}
+              
+              <div className="flex justify-between text-sm">
+                <span className="text-gray-400">
+                  {formatMarketCap(token.marketCap || 0)}
+                </span>
+                <span className={`font-medium ${token.priceChange24h >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                  {token.priceChange24h >= 0 ? '+' : ''}{token.priceChange24h.toFixed(2)}%
+                </span>
               </div>
-            ) : (
-              <div className="text-center py-12 animate-fadeIn">
-                <div className="inline-block p-4 rounded-full bg-navy-400/30 mb-4">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                  </svg>
-                </div>
-                <h2 className="text-xl font-bold mb-2">No tokens found</h2>
-                {selectedTag ? (
-                  <>
-                    <p className="text-gray-400 mb-4">No tokens found matching "{selectedTag}"</p>
-                    <button 
-                      className="mt-2 px-4 py-2 bg-primary/10 hover:bg-primary/20 text-primary rounded-full text-sm transition-all duration-300"
-                      onClick={() => setSelectedTag(null)}
-                    >
-                      Clear filter
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <p className="text-gray-300 mb-6">
-                      Be the first to create a token and start trading!
-                    </p>
-                    <Link 
-                      href="/create" 
-                      className="inline-block px-6 py-3 bg-primary text-navy-700 rounded-full font-medium hover:bg-primary-400 transition-all hover:shadow-md"
-                    >
-                      Create Token
-                    </Link>
-                  </>
-                )}
+              
+              <div className="mt-2 text-xs text-gray-500 flex justify-between">
+                <span>Created {getTimeSinceCreation(token.createdAt)}</span>
+                <span>{token.replies || 0} comments</span>
               </div>
-            )}
-          </>
-        )}
+            </div>
+          </Link>
+        ))}
       </div>
     </div>
   );

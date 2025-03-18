@@ -13,7 +13,7 @@ const TwitterHeaderPage: FC = () => {
     setIsVisible(true);
     
     // Set body background to dark
-    document.body.style.backgroundColor = '#12131A';
+    document.body.style.backgroundColor = '#000000';
     
     return () => {
       document.body.style.backgroundColor = '';
@@ -24,7 +24,7 @@ const TwitterHeaderPage: FC = () => {
     <div className="relative w-full overflow-hidden">
       {/* Twitter Header Container - 1500x500 pixels */}
       <div 
-        className="relative mx-auto bg-navy twitter-header-container"
+        className="relative mx-auto bg-black twitter-header-container"
         style={{ 
           width: '1500px', 
           height: '500px',
@@ -34,11 +34,20 @@ const TwitterHeaderPage: FC = () => {
       >
         {/* Background elements */}
         <div className="absolute inset-0 z-0 overflow-hidden">
-          <div className="absolute top-20 left-1/4 w-96 h-96 rounded-full bg-primary/5 blur-3xl"></div>
-          <div className="absolute bottom-10 right-1/4 w-96 h-96 rounded-full bg-purple/5 blur-3xl"></div>
-          <div className="absolute top-40 right-1/3 w-8 h-8 rounded-full bg-primary animate-float"></div>
-          <div className="absolute top-60 left-1/3 w-6 h-6 rounded-full bg-teal/50 animate-float delay-300"></div>
-          <div className="absolute bottom-20 right-1/4 w-7 h-7 rounded-full bg-red/50 animate-float delay-200"></div>
+          {/* Subtle gradient background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-black to-gray-900"></div>
+          
+          {/* Red accents */}
+          <div className="absolute top-0 right-0 w-1/3 h-full bg-primary/5 blur-[100px] opacity-30"></div>
+          <div className="absolute bottom-0 left-0 w-1/3 h-1/2 bg-primary/5 blur-[100px] opacity-30"></div>
+          
+          {/* Subtle grid pattern */}
+          <div className="absolute inset-0 opacity-10" 
+            style={{
+              backgroundImage: 'linear-gradient(#FF0000 1px, transparent 1px), linear-gradient(to right, #FF0000 1px, transparent 1px)',
+              backgroundSize: '40px 40px'
+            }}>
+          </div>
         </div>
         
         {/* Content Container */}
@@ -49,52 +58,58 @@ const TwitterHeaderPage: FC = () => {
         >
           {/* Left Side - Logo */}
           <div className="flex items-center">
-            <ProfessionalLogo size={200} showText={false} />
+            <div className="relative">
+              <div className="absolute -inset-2 bg-primary/20 rounded-full blur-md animate-pulse-slow"></div>
+              <ProfessionalLogo size={160} showText={false} />
+            </div>
           </div>
           
           {/* Center - Text */}
-          <div className="text-center">
-            <h1 className="text-6xl font-bold tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-primary via-primary-light to-primary drop-shadow-glow">
-              <span className="font-extrabold">YUMS</span>
-              <span className="text-white opacity-80 mx-1">.</span>
-              <span className="font-extrabold">FUN</span>
+          <div className="text-center relative">
+            <h1 className="text-7xl font-bold tracking-wider">
+              <span className="text-primary font-black">yums</span>
+              <span className="text-white font-black">.fun</span>
             </h1>
-            <p className="text-xl text-foreground-secondary mt-4">
+            <div className="h-0.5 w-full bg-gradient-to-r from-transparent via-primary to-transparent my-4"></div>
+            <p className="text-xl text-white mt-2 tracking-wide">
               Launch your Solana token in seconds
-            </p>
-            <p className="text-lg text-primary-light mt-2">
-              @yumsdotfun
             </p>
           </div>
           
           {/* Right Side - Stats */}
-          <div className="flex flex-col gap-4">
-            <div className="text-center bg-navy-800/50 backdrop-blur-sm px-8 py-3 rounded-xl border border-primary/20">
-              <div className="text-3xl font-mono font-bold text-primary">42</div>
-              <div className="text-sm text-foreground-secondary">Tokens Created</div>
+          <div className="flex flex-col gap-5">
+            <div className="text-center bg-black/60 backdrop-blur-sm px-8 py-4 rounded-xl border border-primary/30 transform hover:scale-105 transition-all duration-300">
+              <div className="text-4xl font-mono font-bold text-primary">420+</div>
+              <div className="text-sm text-white mt-1">Tokens Created</div>
             </div>
-            <div className="text-center bg-navy-800/50 backdrop-blur-sm px-8 py-3 rounded-xl border border-primary/20">
-              <div className="text-3xl font-mono font-bold text-primary">$2.2K</div>
-              <div className="text-sm text-foreground-secondary">Trading Volume</div>
+            <div className="text-center bg-black/60 backdrop-blur-sm px-8 py-4 rounded-xl border border-primary/30 transform hover:scale-105 transition-all duration-300">
+              <div className="text-4xl font-mono font-bold text-primary">$43K</div>
+              <div className="text-sm text-white mt-1">Trading Volume</div>
             </div>
           </div>
         </div>
         
         {/* Currency Symbols Floating */}
-        <div className="absolute top-20 left-40 w-10 h-10 rounded-full bg-primary flex items-center justify-center text-navy font-bold animate-float">$</div>
-        <div className="absolute bottom-20 right-40 w-10 h-10 rounded-full bg-primary flex items-center justify-center text-navy font-bold animate-float delay-300">¥</div>
-        <div className="absolute top-1/2 left-1/4 w-10 h-10 rounded-full bg-primary flex items-center justify-center text-navy font-bold animate-float delay-150">€</div>
-        <div className="absolute top-1/3 right-1/4 w-10 h-10 rounded-full bg-primary flex items-center justify-center text-navy font-bold animate-float delay-450">£</div>
+        <div className="absolute top-20 left-40 w-12 h-12 rounded-full bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center text-white font-bold animate-float">$</div>
+        <div className="absolute bottom-20 right-40 w-12 h-12 rounded-full bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center text-white font-bold animate-float delay-300">¥</div>
+        <div className="absolute top-1/2 left-1/4 w-12 h-12 rounded-full bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center text-white font-bold animate-float delay-150">€</div>
+        <div className="absolute top-1/3 right-1/4 w-12 h-12 rounded-full bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center text-white font-bold animate-float delay-450">£</div>
+        
+        {/* Bottom bar with URL */}
+        <div className="absolute bottom-0 inset-x-0 h-12 bg-black/80 backdrop-blur-md flex items-center justify-center border-t border-primary/20">
+          <span className="text-primary font-medium mr-2">yums.fun</span>
+          <span className="text-white/70 text-sm">• The easiest way to create Solana tokens</span>
+        </div>
       </div>
       
       {/* Instructions */}
       <div className="mt-8 text-center max-w-xl mx-auto">
-        <p className="text-foreground-secondary mb-4">
+        <p className="text-gray-300 mb-4">
           Take a screenshot of the header above for your Twitter profile (1500x500 pixels)
         </p>
         <Link 
           href="/" 
-          className="text-primary hover:text-primary-light transition-colors"
+          className="inline-block px-6 py-2 bg-primary hover:bg-primary-dark text-white rounded-lg transition-colors duration-300"
         >
           Back to Home
         </Link>

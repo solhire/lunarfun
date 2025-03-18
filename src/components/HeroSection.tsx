@@ -46,12 +46,7 @@ const HeroSection: FC = () => {
   
   // Format market cap to readable format
   const formatMarketCap = (value: number) => {
-    if (value >= 1000000) {
-      return `$${(value / 1000000).toFixed(2)}M`;
-    } else if (value >= 1000) {
-      return `$${(value / 1000).toFixed(2)}K`;
-    }
-    return `$${value.toFixed(2)}`;
+    return `$${value.toFixed(0)}`;
   };
   
   // Handle sort option change
@@ -113,7 +108,7 @@ const HeroSection: FC = () => {
         
         {/* Main Heading with staggered animation */}
         <h1 
-          className={`text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary via-primary-light to-primary transition-all duration-1000 ease-out mx-auto ${
+          className={`text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary via-primary-light to-primary-dark transition-all duration-1000 ease-out mx-auto ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           }`}
         >
@@ -138,15 +133,15 @@ const HeroSection: FC = () => {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link 
               href="/create" 
-              className="group relative inline-flex items-center px-8 py-4 text-lg font-bold text-navy-800 bg-primary hover:bg-primary-light rounded-xl transition-all duration-500 ease-out shadow-lg hover:shadow-primary/30 hover:scale-105 active:scale-95"
+              className="group relative inline-flex items-center px-8 py-4 text-lg font-bold text-white bg-primary hover:bg-primary-dark rounded-xl transition-all duration-500 ease-out shadow-lg hover:shadow-primary/30 hover:scale-105 active:scale-95"
             >
               <div className="absolute inset-0 bg-primary/20 rounded-xl animate-pulse opacity-70 transition-opacity duration-700"></div>
               <span className="relative flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2 text-navy-800 transition-transform duration-300 group-hover:rotate-90" viewBox="0 0 20 20" fill="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2 text-white transition-transform duration-300 group-hover:rotate-90" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
                 </svg>
                 Create Token
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2 text-navy-800 transition-all duration-500 ease-out group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2 text-white transition-all duration-500 ease-out group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
                 </svg>
               </span>

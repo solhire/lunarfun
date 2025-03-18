@@ -194,7 +194,8 @@ export const getConnection = async (network: 'mainnet' | 'devnet' = DEFAULT_NETW
  */
 export const checkWalletBalance = async (
   connection: Connection,
-  publicKey: PublicKey
+  publicKey: PublicKey,
+  isFreeToken = false // Add parameter to indicate if this is a free token
 ): Promise<{ hasEnoughSol: boolean; balance: number }> => {
   try {
     const balance = await connection.getBalance(publicKey);
@@ -202,6 +203,14 @@ export const checkWalletBalance = async (
     
     // Minimum required is 0.05 SOL (this is an estimate, adjust as needed)
     const minimumRequired = 0.05;
+    
+    // If this is a free token, we don't need to check balance
+    if (isFreeToken) {
+      return {
+        hasEnoughSol: true, // Always has enough for free token
+        balance: balanceInSol
+      };
+    }
     
     return {
       hasEnoughSol: balanceInSol >= minimumRequired,

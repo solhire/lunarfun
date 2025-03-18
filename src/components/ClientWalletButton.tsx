@@ -19,7 +19,7 @@ export default function ClientWalletButton() {
     // Return a placeholder with the same dimensions and styling
     return (
       <button 
-        className="!bg-primary !text-navy-700 hover:!bg-primary-light !rounded-full !text-sm !font-medium !py-2 !px-6 !transition-all hover:!shadow-md hover:!-translate-y-0.5"
+        className="!bg-primary !text-white hover:!bg-primary-dark !rounded-full !text-sm !font-medium !py-2 !px-6 !transition-all hover:!shadow-md hover:!-translate-y-0.5"
         disabled
       >
         Connect Wallet
@@ -29,7 +29,7 @@ export default function ClientWalletButton() {
 
   return (
     <WalletMultiButton 
-      className="!bg-primary !text-navy-700 hover:!bg-primary-light !rounded-full !text-sm !font-medium !py-2 !px-6 !transition-all hover:!shadow-md hover:!-translate-y-0.5"
+      className="!bg-primary !text-white hover:!bg-primary-dark !rounded-full !text-sm !font-medium !py-2 !px-6 !transition-all hover:!shadow-md hover:!-translate-y-0.5"
     >
       {connected ? 'Connected' : 'Connect Wallet'}
     </WalletMultiButton>

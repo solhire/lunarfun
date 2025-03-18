@@ -1,13 +1,12 @@
 'use client';
 
-import { ReactNode } from 'react';
+import React from 'react';
 
-interface ProvidersProps {
-  children: ReactNode;
-}
-
-export function Providers({ children }: ProvidersProps) {
+// Mock providers wrapper
+export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <>{children}</>
+    <>
+      {children}
+    </>
   );
 } 

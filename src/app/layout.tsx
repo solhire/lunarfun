@@ -22,8 +22,8 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "Yums.fun | Solana Memecoin Launchpad",
-  description: "Create and trade Solana tokens with minimal effort on the most user-friendly launchpad in the ecosystem",
+  title: "Yums.fun - Launch Solana Tokens Easily",
+  description: "Create and launch Solana tokens in seconds with no coding required",
   keywords: ["solana", "memecoin", "crypto", "token", "launchpad", "yums", "pump"],
 };
 

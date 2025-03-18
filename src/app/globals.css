@@ -4,12 +4,12 @@
 
 :root {
   /* Updated color system */
-  --background: #12131A;
-  --foreground: #FFFFFF;
+  --background: #121212;
+  --foreground: #ffffff;
   --foreground-secondary: #E0E0E0;
-  --primary: #FFD100;
-  --primary-light: #FFE666;
-  --primary-dark: #E6BC00;
+  --primary: #FF0000;
+  --primary-light: #FF3333;
+  --primary-dark: #CC0000;
   --navy: #12131A;
   --navy-light: #2A2D3A;
   --navy-dark: #0A0B12;
@@ -32,6 +32,10 @@
   --foreground-rgb: 255, 255, 255;
   --background-start-rgb: 0, 0, 0;
   --background-end-rgb: 0, 0, 0;
+  --accent: #333333;
+  --border: #2A2A2A;
+  --ring: #FF0000;
+  --muted: #666666;
 }
 
 @theme inline {
@@ -44,8 +48,8 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #000000;
+    --foreground: #ffffff;
   }
 }
 

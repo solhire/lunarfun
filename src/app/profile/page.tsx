@@ -18,8 +18,20 @@ export default function ProfilePage() {
             <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
               <div className="w-32 h-32 relative">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary to-primary-light rounded-full animate-pulse-slow"></div>
-                <div className="absolute inset-1 bg-navy-700 rounded-full flex items-center justify-center">
-                  <span className="text-4xl font-bold text-primary">Y</span>
+                <div className="absolute inset-1 bg-navy-700 rounded-full overflow-hidden">
+                  <Image
+                    src="/pfp.jpg"
+                    alt="Profile picture"
+                    width={128}
+                    height={128}
+                    className="object-cover w-full h-full"
+                    onError={(e) => {
+                      // Fallback if image fails to load
+                      const target = e.target as HTMLImageElement;
+                      target.onerror = null;
+                      target.src = '/pfp.jpg';
+                    }}
+                  />
                 </div>
               </div>
               

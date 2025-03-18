@@ -20,10 +20,10 @@ const SOL_TOKEN: TokenInfo = {
   logoURI: '/tokens/sol.png',
   createdAt: Date.now() - 365 * 24 * 60 * 60 * 1000, // 1 year ago
   liquidity: 450000000,
-  volume24h: 22000000,
+  volume24h: 220,
   price: 150.25,
   priceChange24h: 3.2,
-  marketCap: 65000000000,
+  marketCap: 9500,
 };
 
 export default function SolTokenPage() {

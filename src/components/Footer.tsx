@@ -27,7 +27,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
           <div className="col-span-1 md:col-span-4">
             <Link href="/" className="flex items-center">
-              <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-light">
+              <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-dark">
                 Yums.fun
               </span>
             </Link>
@@ -184,7 +184,7 @@ export default function Footer() {
                 />
                 <button
                   type="submit"
-                  className="bg-primary hover:bg-primary-light text-navy-800 font-medium rounded-lg px-3 py-2 text-sm transition-all duration-300"
+                  className="bg-primary hover:bg-primary-dark text-white font-medium rounded-lg px-3 py-2 text-sm transition-all duration-300"
                 >
                   Subscribe
                 </button>

@@ -201,7 +201,7 @@ export const getMockTrendingTokens = (): TokenInfo[] => {
       logoURI: '/tokens/bwirt.jpg',
       createdAt: Date.now() - 24 * 60 * 60 * 1000, // 24 hours ago
       liquidity: 4200000,
-      volume24h: 150000,
+      volume24h: 150,
       price: 0.00002345,
       priceChange24h: 12.8,
       marketCap: 4200,
@@ -214,10 +214,10 @@ export const getMockTrendingTokens = (): TokenInfo[] => {
       logoURI: '/tokens/jup.png',
       createdAt: Date.now() - 48 * 60 * 60 * 1000, // 48 hours ago
       liquidity: 28000000,
-      volume24h: 950000,
+      volume24h: 950,
       price: 1.23,
       priceChange24h: 5.3,
-      marketCap: 2800000,
+      marketCap: 9850,
     },
     {
       address: '7nZbHGwzFJ9Dz8uBeRLnmJeBrUVMS8C8YoycjgE3XJ11',
@@ -227,7 +227,7 @@ export const getMockTrendingTokens = (): TokenInfo[] => {
       logoURI: '/tokens/fv.jpg',
       createdAt: Date.now() - 72 * 60 * 60 * 1000, // 72 hours ago
       liquidity: 3700000,
-      volume24h: 120000,
+      volume24h: 120,
       price: 0.037,
       priceChange24h: -2.5,
       marketCap: 3700,
@@ -240,10 +240,10 @@ export const getMockTrendingTokens = (): TokenInfo[] => {
       logoURI: '/tokens/usdc.png',
       createdAt: Date.now() - 365 * 24 * 60 * 60 * 1000, // 1 year ago
       liquidity: 500000000,
-      volume24h: 25000000,
+      volume24h: 250,
       price: 1.0,
       priceChange24h: 0.01,
-      marketCap: 25000000000,
+      marketCap: 8750,
     },
     {
       address: 'So11111111111111111111111111111111111111112',
@@ -253,10 +253,10 @@ export const getMockTrendingTokens = (): TokenInfo[] => {
       logoURI: '/tokens/sol.png',
       createdAt: Date.now() - 365 * 24 * 60 * 60 * 1000, // 1 year ago
       liquidity: 450000000,
-      volume24h: 22000000,
+      volume24h: 220,
       price: 150.25,
       priceChange24h: 3.2,
-      marketCap: 65000000000,
+      marketCap: 9500,
     }
   ];
 };
@@ -274,7 +274,7 @@ export const getMockSolanaTokens = () => {
           logoURI: '/tokens/bwirt.jpg',
           createdAt: Date.now() - 24 * 60 * 60 * 1000, // 24 hours ago
           liquidity: 4200000,
-          volume24h: 150000,
+          volume24h: 150,
           price: 0.00002345,
           priceChange24h: 12.8,
           marketCap: 4200,
@@ -287,10 +287,10 @@ export const getMockSolanaTokens = () => {
           logoURI: '/tokens/jup.png',
           createdAt: Date.now() - 48 * 60 * 60 * 1000, // 48 hours ago
           liquidity: 28000000,
-          volume24h: 950000,
+          volume24h: 950,
           price: 1.23,
           priceChange24h: 5.3,
-          marketCap: 2800000,
+          marketCap: 9850,
         },
         {
           address: '7nZbHGwzFJ9Dz8uBeRLnmJeBrUVMS8C8YoycjgE3XJ11',
@@ -300,7 +300,7 @@ export const getMockSolanaTokens = () => {
           logoURI: '/tokens/fv.jpg',
           createdAt: Date.now() - 72 * 60 * 60 * 1000, // 72 hours ago
           liquidity: 3700000,
-          volume24h: 120000,
+          volume24h: 120,
           price: 0.037,
           priceChange24h: -2.5,
           marketCap: 3700,
