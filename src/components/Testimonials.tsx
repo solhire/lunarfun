@@ -59,7 +59,7 @@ const TestimonialCard: FC<{ testimonial: Testimonial; isActive: boolean }> = ({ 
             className="object-cover"
             onError={(e) => {
               const target = e.target as HTMLImageElement;
-              target.src = '/pfp.jpg';
+              target.src = '/profile.jpg';
             }}
           />
         </div>
@@ -77,7 +77,7 @@ const TestimonialCard: FC<{ testimonial: Testimonial; isActive: boolean }> = ({ 
                     className="object-cover"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
-                      target.src = '/pfp.jpg';
+                      target.src = '/profile.jpg';
                     }}
                   />
                 </div>

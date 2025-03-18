@@ -53,7 +53,7 @@ export const uploadTokenLogo = async (file: File, tokenId: string): Promise<stri
  */
 export const generatePlaceholderLogo = (symbol: string): string => {
   // Use the static profile picture from public directory
-  return '/pfp.jpg';
+  return '/profile.jpg';
   
   // Previous implementation (commented out for reference)
   /*

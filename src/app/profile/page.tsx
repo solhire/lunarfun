@@ -20,16 +20,14 @@ export default function ProfilePage() {
                 <div className="absolute inset-0 bg-gradient-to-br from-primary to-primary-light rounded-full animate-pulse-slow"></div>
                 <div className="absolute inset-1 bg-navy-700 rounded-full overflow-hidden">
                   <Image
-                    src="/pfp.jpg"
-                    alt="Profile picture"
-                    width={128}
-                    height={128}
-                    className="object-cover w-full h-full"
+                    className="h-24 w-24 rounded-full object-cover border-2 border-primary"
+                    width={96}
+                    height={96}
+                    src="/profile.jpg"
+                    alt="Profile"
                     onError={(e) => {
-                      // Fallback if image fails to load
                       const target = e.target as HTMLImageElement;
-                      target.onerror = null;
-                      target.src = '/pfp.jpg';
+                      target.src = '/profile.jpg';
                     }}
                   />
                 </div>
