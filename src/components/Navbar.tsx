@@ -195,20 +195,6 @@ export default function Navbar() {
               <span className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-primary/30 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
             </div>
 
-            {/* Social Links */}
-            <a 
-              href="https://twitter.com/yumsdotfun" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="hidden md:block bg-navy-400/70 hover:bg-navy-400/90 text-white rounded-full p-2 transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 relative group"
-              aria-label="Twitter"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-              </svg>
-              <span className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-primary/30 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
-            </a>
-
             {/* Connect Wallet Button */}
             <div className="hidden md:block">
               <ClientWalletButton />
