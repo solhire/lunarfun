@@ -23,7 +23,7 @@ export default function WarningBanner() {
               clipRule="evenodd" 
             />
           </svg>
-          <span className="font-medium">Token creation is temporarily limited to ensure payment system stability. CA: CYjdCxAZCU9BLR51HYeBPjYizmTpYWpWZszRVkNwpump</span>
+          <span className="font-medium">Token creation is temporarily limited to ensure payment system stability. Official CA: 77pactxmNv9JZjUz2Rc5aC449i69ihwoJGhbxLUUpump. Follow our X (Twitter) for updates. Thank you for your patience.</span>
         </div>
         <button 
           onClick={() => setIsVisible(false)} 
