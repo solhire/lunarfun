@@ -49,7 +49,7 @@ const Header = () => {
   return (
     <>
       {/* Warning Banner */}
-      <div className="w-full bg-yellow-400 text-black overflow-x-auto whitespace-nowrap scrollbar-hide shadow-md">
+      <div className="w-full bg-red-600 text-white overflow-x-auto whitespace-nowrap scrollbar-hide shadow-md">
         <div className="flex items-center justify-center px-4 py-2">
           <div className="flex items-center text-sm font-medium">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
