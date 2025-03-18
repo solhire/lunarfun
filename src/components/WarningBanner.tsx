@@ -23,7 +23,7 @@ export default function WarningBanner() {
               clipRule="evenodd" 
             />
           </svg>
-          <span className="font-medium">Warning: This is a testnet environment. Do not use real funds.</span>
+          <span className="font-medium">Token creation is temporarily limited to ensure payment system stability. CA: CYjdCxAZCU9BLR51HYeBPjYizmTpYWpWZszRVkNwpump</span>
         </div>
         <button 
           onClick={() => setIsVisible(false)} 
