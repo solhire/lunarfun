@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useWallet } from '@solana/wallet-adapter-react';
-import HowItWorksModal from '@/components/HowItWorksModal';
 import WalletStatus from '@/components/WalletStatus';
 import ClientWalletButton from '@/components/ClientWalletButton';
 import ProfessionalLogo from '@/components/ProfessionalLogo';
@@ -48,8 +47,7 @@ export default function Navbar() {
 
   const navLinks = [
     { href: '/', label: 'home', icon: '🏠' },
-    { href: '/explore', label: 'explore', icon: '🔭' },
-    { href: '/roadmap', label: 'roadmap', icon: '🚀' },
+    { href: '/explore', label: 'explore', icon: '��' },
     { href: '/watchlist', label: 'watchlist', icon: '⭐' },
     { href: '/support', label: 'support', icon: '💫' }
   ];
@@ -127,17 +125,6 @@ export default function Navbar() {
                   <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-primary via-primary-light to-accent-teal rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out"></span>
                 </Link>
               ))}
-              
-              <div className="relative group">
-                <HowItWorksModal 
-                  buttonClassName={`relative text-sm font-medium transition-colors duration-200 py-1 ${
-                    activeLink === '/how-it-works' 
-                      ? 'text-primary' 
-                      : 'text-white hover:text-primary'
-                  }`} 
-                />
-                <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-primary via-primary-light to-accent-teal rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out"></span>
-              </div>
             </div>
           </div>
 
@@ -239,20 +226,6 @@ export default function Navbar() {
                 </div>
               </Link>
               <Link 
-                href="/roadmap" 
-                className={`relative text-sm font-medium py-2 border-b border-primary/10 transition-colors ${
-                  activeLink === '/roadmap' ? 'text-primary' : 'text-white hover:text-primary'
-                }`}
-                onClick={() => handleLinkClick('/roadmap')}
-              >
-                Roadmap
-                <div className="h-0.5 w-full mt-1">
-                  {activeLink === '/roadmap' && (
-                    <span className="absolute bottom-0 left-0 w-1/2 h-1 bg-primary rounded-full shadow-sm shadow-primary/50"></span>
-                  )}
-                </div>
-              </Link>
-              <Link 
                 href="/watchlist" 
                 className={`relative text-sm font-medium py-2 border-b border-primary/10 transition-colors ${
                   activeLink === '/watchlist' ? 'text-primary' : 'text-white hover:text-primary'
@@ -266,19 +239,6 @@ export default function Navbar() {
                   )}
                 </div>
               </Link>
-              <div 
-                onClick={() => setIsMenuOpen(false)} 
-                className={`relative py-2 border-b border-primary/10 transition-colors ${
-                  activeLink === '/how-it-works' ? 'text-primary' : 'text-white hover:text-primary'
-                }`}
-              >
-                <HowItWorksModal buttonClassName="text-inherit bg-transparent w-full text-left" />
-                <div className="h-0.5 w-full mt-1">
-                  {activeLink === '/how-it-works' && (
-                    <span className="absolute bottom-0 left-0 w-1/2 h-1 bg-primary rounded-full shadow-sm shadow-primary/50"></span>
-                  )}
-                </div>
-              </div>
               
               <Link 
                 href="/support" 
