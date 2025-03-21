@@ -36,7 +36,7 @@ export default function ProfilePage() {
               <div className="flex-1">
                 <div className="flex flex-col md:flex-row md:items-center justify-between mb-6">
                   <div>
-                    <h2 className="text-2xl font-bold mb-1">Yums Trader</h2>
+                    <h2 className="text-2xl font-bold mb-1">Lunara Trader</h2>
                     <div className="flex items-center text-sm text-gray-400 mb-2">
                       <span className="font-mono">0x1a2b...3c4d</span>
                       <button className="ml-2 text-primary hover:text-primary-light">

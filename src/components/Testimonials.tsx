@@ -19,7 +19,7 @@ const testimonials: Testimonial[] = [
     name: 'Alex Johnson',
     role: 'Founder, MoonShot',
     avatar: '/testimonials/avatar1.jpg',
-    content: 'Yums.fun made it incredibly easy to launch our token. We went from idea to live trading in less than an hour! The platform is intuitive and the support team was helpful whenever we had questions.',
+    content: 'Lunara.fun made it incredibly easy to launch our token. We went from idea to live trading in less than an hour! The platform is intuitive and the support team was helpful whenever we had questions.',
     project: 'MoonShot',
     projectLogo: '/testimonials/project1.png'
   },
@@ -37,7 +37,7 @@ const testimonials: Testimonial[] = [
     name: 'Michael Smith',
     role: 'Community Manager',
     avatar: '/testimonials/avatar3.jpg',
-    content: 'Our community loved how quickly we could get our token live on Solana. Yums.fun provided all the tools we needed to track growth and engage with our earliest supporters. Highly recommended!',
+    content: 'Our community loved how quickly we could get our token live on Solana. Lunara.fun provided all the tools we needed to track growth and engage with our earliest supporters. Highly recommended!',
   },
 ];
 
@@ -116,7 +116,7 @@ const Testimonials: FC = () => {
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-white mb-2">What Our Users Say</h2>
           <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-            Join thousands of creators who have successfully launched their tokens on Solana with Yums.fun
+            Join thousands of creators who have successfully launched their tokens on Solana with Lunara.fun
           </p>
         </div>
         
@@ -146,7 +146,7 @@ const Testimonials: FC = () => {
         <div className="mt-16 text-center">
           <div className="inline-flex items-center px-4 py-2 rounded-full bg-navy-700/50 border border-navy-600/50">
             <span className="text-primary font-medium mr-2">10,000+</span>
-            <span className="text-gray-400 text-sm">Tokens launched on Yums.fun</span>
+            <span className="text-gray-400 text-sm">Tokens launched on Lunara.fun</span>
           </div>
         </div>
       </div>

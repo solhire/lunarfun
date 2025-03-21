@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Yums.fun | Secret Logo",
-  description: "Secret logo page for Yums.fun",
+  title: "Lunara.fun | Secret Logo",
+  description: "Secret logo page for Lunara.fun",
   robots: "noindex, nofollow",
 };
 

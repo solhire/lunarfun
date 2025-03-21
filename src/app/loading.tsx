@@ -4,7 +4,7 @@ export default function Loading() {
       <div className="flex flex-col items-center">
         <div className="relative w-16 h-16 mb-4">
           <div className="absolute inset-0 bg-primary rounded-full animate-pulse"></div>
-          <div className="absolute inset-2 bg-navy-500 rounded-full flex items-center justify-center text-primary text-2xl font-bold">Y</div>
+          <div className="absolute inset-2 bg-navy-500 rounded-full flex items-center justify-center text-primary text-2xl font-bold">L</div>
         </div>
         <h2 className="text-xl font-medium mb-2">Loading...</h2>
         <p className="text-gray-400 text-sm">Please wait while we fetch the data</p>

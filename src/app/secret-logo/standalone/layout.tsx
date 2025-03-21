@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Yums.fun | Logo",
-  description: "Official logo for Yums.fun",
+  title: "Lunara.fun | Logo",
+  description: "Official logo for Lunara.fun",
   robots: "noindex, nofollow",
 };
 

@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Yums.fun | Twitter Header",
-  description: "Twitter header image for Yums.fun",
+  title: "Lunara.fun | Twitter Header",
+  description: "Twitter header image for Lunara.fun",
   robots: "noindex, nofollow",
 };
 

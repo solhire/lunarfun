@@ -29,7 +29,7 @@ const codexApi = axios.create({
   headers: {
     'Authorization': CODEX_API_KEY,
     'Content-Type': 'application/json',
-    'Origin': 'https://yums.fun'
+    'Origin': 'https://lunara.fun'
   }
 });
 
@@ -39,7 +39,7 @@ const codexGraphApi = axios.create({
   headers: {
     'Authorization': CODEX_API_KEY,
     'Content-Type': 'application/json',
-    'Origin': 'https://yums.fun'
+    'Origin': 'https://lunara.fun'
   }
 });
 

@@ -11,7 +11,7 @@ const HeroSection: FC = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isPulsing, setIsPulsing] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
-  const [sortOption, setSortOption] = useState<'yums.fun tokens' | 'yums.fun' | 'pump.fun'>('yums.fun tokens');
+  const [sortOption, setSortOption] = useState<'lunara.fun tokens' | 'lunara.fun' | 'pump.fun'>('lunara.fun tokens');
   const [showSortOptions, setShowSortOptions] = useState(false);
   const { topToken, loading } = useTokenStats();
   const { connected } = useWallet();
@@ -50,7 +50,7 @@ const HeroSection: FC = () => {
   };
   
   // Handle sort option change
-  const handleSortChange = (option: 'yums.fun tokens' | 'yums.fun' | 'pump.fun') => {
+  const handleSortChange = (option: 'lunara.fun tokens' | 'lunara.fun' | 'pump.fun') => {
     setSortOption(option);
     setShowSortOptions(false);
   };

@@ -67,7 +67,7 @@ export function useCodexWebsocket(options?: WebSocketOptions) {
           payload: {
             headers: {
               Authorization: CODEX_API_KEY,
-              Origin: 'https://yums.fun'
+              Origin: 'https://lunara.fun'
             }
           }
         }));

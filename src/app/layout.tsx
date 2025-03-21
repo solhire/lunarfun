@@ -22,9 +22,9 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "Yums.fun - Launch Solana Tokens Easily",
+  title: "Lunara.fun - Launch Solana Tokens Easily",
   description: "Create and launch Solana tokens in seconds with no coding required",
-  keywords: ["solana", "memecoin", "crypto", "token", "launchpad", "yums", "pump"],
+  keywords: ["solana", "memecoin", "crypto", "token", "launchpad", "lunara", "cosmic"],
 };
 
 export default function RootLayout({

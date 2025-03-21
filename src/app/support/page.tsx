@@ -88,7 +88,7 @@ export default function SupportPage() {
               Need direct assistance? Our support team is ready to help with any questions.
             </p>
             <a 
-              href="mailto:support@yums.fun" 
+              href="mailto:support@lunara.fun" 
               className="inline-block px-6 py-2 bg-primary text-navy-700 rounded-full font-medium hover:bg-primary-400 transition-all"
             >
               Email Us

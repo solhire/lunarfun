@@ -7,6 +7,7 @@ import HowItWorksModal from '@/components/HowItWorksModal';
 import WalletStatus from '@/components/WalletStatus';
 import ClientWalletButton from '@/components/ClientWalletButton';
 import ProfessionalLogo from '@/components/ProfessionalLogo';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Navbar() {
   const { publicKey } = useWallet();
@@ -45,103 +46,88 @@ export default function Navbar() {
     setIsMenuOpen(false);
   };
 
+  const navLinks = [
+    { href: '/', label: 'home', icon: '🏠' },
+    { href: '/explore', label: 'explore', icon: '🔭' },
+    { href: '/roadmap', label: 'roadmap', icon: '🚀' },
+    { href: '/watchlist', label: 'watchlist', icon: '⭐' },
+    { href: '/support', label: 'support', icon: '💫' }
+  ];
+
   return (
     <>
-      {/* Warning Banner */}
-      <div className="w-full bg-red-600 text-white overflow-x-auto whitespace-nowrap scrollbar-hide shadow-md">
-        <div className="flex items-center justify-center px-4 py-2">
-          <div className="flex items-center text-sm font-medium">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-            </svg>
-            <span className="font-semibold">NOTICE:</span> <span className="ml-1">Token creation is temporarily limited to ensure payment system stability. Official CA: CYjdCxAZCU9BLR51HYeBPjYizmTpYWpWZszRVkNwpump. Follow our X (Twitter) for updates. Thank you for your patience.</span>
+      {/* Cosmic Alert Banner */}
+      <div className="relative w-full bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5 text-white overflow-hidden">
+        <div className="absolute inset-0 bg-[url('/stars.png')] opacity-30 animate-twinkle"></div>
+        <div className="flex items-center justify-center px-4 py-2 relative">
+          <div className="flex items-center text-sm font-medium space-x-2">
+            <span className="text-primary">✧</span>
+            <span className="font-semibold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-light">NOTICE:</span>
+            <span className="text-white/90">Contract address will be announced first on</span>
+            <a 
+              href="https://x.com/lunaradotfun" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-primary hover:text-primary-light transition-colors"
+            >
+              @lunaradotfun
+            </a>
+            <span className="text-primary">✧</span>
           </div>
         </div>
       </div>
 
-      {/* Main Navbar */}
+      {/* Main Navigation */}
       <nav 
         ref={navbarRef}
         className={`sticky top-0 z-50 transition-all duration-500 ${
           isScrolled 
-            ? 'bg-navy-500/95 backdrop-blur-md shadow-lg' 
-            : 'bg-navy-500'
+            ? 'bg-navy/80 backdrop-blur-xl border-b border-primary/10' 
+            : 'bg-transparent'
         }`}
       >
-        <div className="container mx-auto px-4 py-3 flex items-center justify-between">
-          {/* Left: Logo and Navigation */}
-          <div className="flex items-center">
-            {/* Logo added back */}
-            <Link href="/" className="flex items-center mr-6">
-              <div className="mr-2">
-                <ProfessionalLogo size={24} showText={false} autoAnimate={false} />
+        <div className="container mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            {/* Logo Section */}
+            <Link href="/" className="flex items-center space-x-3 group">
+              <div className="relative">
+                <div className="absolute -inset-2 bg-gradient-to-r from-primary/20 via-accent-teal/20 to-primary/20 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+                <ProfessionalLogo size={32} showText={false} autoAnimate={false} />
               </div>
-              <span className="text-lg font-bold">
-                <span className="text-primary">yums</span>
-                <span className="text-white">.fun</span>
-              </span>
+              <div className="flex flex-col">
+                <span className="text-xl font-bold tracking-wide">
+                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary via-primary-light to-accent-teal">lunara</span>
+                  <span className="text-white opacity-80">.fun</span>
+                </span>
+                <span className="text-xs text-white/50">cosmic innovation</span>
+              </div>
             </Link>
-            <div className="hidden md:flex items-center space-x-6">
-              <Link 
-                href="/" 
-                className={`relative text-sm font-medium transition-colors duration-200 py-1 group ${
-                  activeLink === '/' 
-                    ? 'text-primary' 
-                    : 'text-white hover:text-primary'
-                }`}
-                onClick={() => handleLinkClick('/')}
-              >
-                home
-                {activeLink === '/' && (
-                  <span className="absolute -bottom-1 left-0 w-full h-1 bg-primary rounded-full shadow-sm shadow-primary/50"></span>
-                )}
-                <span className="absolute -bottom-1 left-0 w-full h-1 bg-primary rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out"></span>
-              </Link>
-              <Link 
-                href="/explore" 
-                className={`relative text-sm font-medium transition-colors duration-200 py-1 group ${
-                  activeLink === '/explore' 
-                    ? 'text-primary' 
-                    : 'text-white hover:text-primary'
-                }`}
-                onClick={() => handleLinkClick('/explore')}
-              >
-                explore
-                {activeLink === '/explore' && (
-                  <span className="absolute -bottom-1 left-0 w-full h-1 bg-primary rounded-full shadow-sm shadow-primary/50"></span>
-                )}
-                <span className="absolute -bottom-1 left-0 w-full h-1 bg-primary rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out"></span>
-              </Link>
-              <Link 
-                href="/roadmap" 
-                className={`relative text-sm font-medium transition-colors duration-200 py-1 group ${
-                  activeLink === '/roadmap' 
-                    ? 'text-primary' 
-                    : 'text-white hover:text-primary'
-                }`}
-                onClick={() => handleLinkClick('/roadmap')}
-              >
-                roadmap
-                {activeLink === '/roadmap' && (
-                  <span className="absolute -bottom-1 left-0 w-full h-1 bg-primary rounded-full shadow-sm shadow-primary/50"></span>
-                )}
-                <span className="absolute -bottom-1 left-0 w-full h-1 bg-primary rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out"></span>
-              </Link>
-              <Link 
-                href="/watchlist" 
-                className={`relative text-sm font-medium transition-colors duration-200 py-1 group ${
-                  activeLink === '/watchlist' 
-                    ? 'text-primary' 
-                    : 'text-white hover:text-primary'
-                }`}
-                onClick={() => handleLinkClick('/watchlist')}
-              >
-                watchlist
-                {activeLink === '/watchlist' && (
-                  <span className="absolute -bottom-1 left-0 w-full h-1 bg-primary rounded-full shadow-sm shadow-primary/50"></span>
-                )}
-                <span className="absolute -bottom-1 left-0 w-full h-1 bg-primary rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out"></span>
-              </Link>
+
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center space-x-8">
+              {navLinks.map((link) => (
+                <Link 
+                  key={link.href}
+                  href={link.href} 
+                  className={`group flex items-center space-x-2 px-3 py-2 rounded-full transition-all duration-300 ${
+                    activeLink === link.href 
+                      ? 'bg-primary/10 text-primary' 
+                      : 'hover:bg-primary/5 text-white hover:text-primary'
+                  }`}
+                  onClick={() => handleLinkClick(link.href)}
+                >
+                  <span className="text-sm">{link.icon}</span>
+                  <span className="text-sm font-medium capitalize">{link.label}</span>
+                  {activeLink === link.href && (
+                    <motion.div 
+                      className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-primary via-primary-light to-accent-teal rounded-full"
+                      layoutId="activeTab"
+                    />
+                  )}
+                  <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-primary via-primary-light to-accent-teal rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out"></span>
+                </Link>
+              ))}
+              
               <div className="relative group">
                 <HowItWorksModal 
                   buttonClassName={`relative text-sm font-medium transition-colors duration-200 py-1 ${
@@ -150,49 +136,29 @@ export default function Navbar() {
                       : 'text-white hover:text-primary'
                   }`} 
                 />
-                <span className="absolute -bottom-1 left-0 w-full h-1 bg-primary rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out"></span>
-                {activeLink === '/how-it-works' && (
-                  <span className="absolute -bottom-1 left-0 w-full h-1 bg-primary rounded-full shadow-sm shadow-primary/50"></span>
-                )}
+                <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-primary via-primary-light to-accent-teal rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out"></span>
               </div>
-              <Link 
-                href="/support" 
-                className={`relative text-sm font-medium transition-colors duration-200 py-1 group ${
-                  activeLink === '/support' 
-                    ? 'text-primary' 
-                    : 'text-white hover:text-primary'
-                }`}
-                onClick={() => handleLinkClick('/support')}
-              >
-                support
-                {activeLink === '/support' && (
-                  <span className="absolute -bottom-1 left-0 w-full h-1 bg-primary rounded-full shadow-sm shadow-primary/50"></span>
-                )}
-                <span className="absolute -bottom-1 left-0 w-full h-1 bg-primary rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out"></span>
-              </Link>
             </div>
           </div>
 
           {/* Right: Search, Wallet, Profile */}
           <div className="flex items-center gap-3">
             {/* Search Bar */}
-            <div className="hidden md:flex items-center bg-navy-400/70 hover:bg-navy-400/90 rounded-full px-3 py-1.5 transition-all duration-300 focus-within:ring-2 focus-within:ring-primary/30 focus-within:bg-navy-400 relative group">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div className="hidden md:flex items-center bg-navy-light/50 hover:bg-navy-light/70 rounded-full px-3 py-1.5 transition-all duration-300 focus-within:ring-2 focus-within:ring-primary/30 focus-within:bg-navy-light/90 relative group">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-foreground-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
               <input 
                 type="text" 
                 placeholder="search" 
-                className="bg-transparent border-none text-white text-sm focus:outline-none px-2 w-24 transition-all duration-300 focus:w-32"
+                className="bg-transparent border-none text-white text-sm focus:outline-none px-2 w-24 transition-all duration-300 focus:w-32 placeholder-foreground-secondary/50"
               />
-              <span className="text-gray-500 text-xs">⌘K</span>
-              <span className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-primary/30 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+              <span className="text-foreground-secondary/50 text-xs">⌘K</span>
             </div>
 
             {/* Wallet Status */}
             <div className="hidden md:block relative group">
               <WalletStatus />
-              <span className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-primary/30 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
             </div>
 
             {/* Connect Wallet Button */}
@@ -203,40 +169,38 @@ export default function Navbar() {
             {/* Profile Link */}
             <Link 
               href="/profile" 
-              className="bg-navy-400/70 hover:bg-navy-400/90 text-white rounded-full p-2 transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 relative group"
+              className="bg-navy-light/50 hover:bg-navy-light/70 text-white rounded-full p-2 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 relative group cosmic-glow"
               aria-label="Profile"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
               </svg>
-              <span className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-primary/30 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
             </Link>
             
             {/* Mobile Menu Button */}
             <button 
-              className="md:hidden text-white p-1 focus:outline-none transition-transform duration-300 hover:scale-105 relative group"
+              className="md:hidden text-white p-1 focus:outline-none transition-transform duration-300 hover:scale-105 relative group cosmic-glow"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-label="Toggle menu"
             >
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
               </svg>
-              <span className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-primary/30 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
             </button>
           </div>
         </div>
         
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden bg-navy-400/95 backdrop-blur-md py-4 px-4 border-t border-navy-300/20 animate-slideIn">
+          <div className="md:hidden bg-navy-light/95 backdrop-blur-xl py-4 px-4 border-t border-primary/10 animate-slideIn">
             <nav className="flex flex-col space-y-4">
               {/* Mobile Logo */}
-              <Link href="/" className="flex items-center mb-4 pb-3 border-b border-navy-300/20" onClick={() => setIsMenuOpen(false)}>
+              <Link href="/" className="flex items-center mb-4 pb-3 border-b border-primary/10" onClick={() => setIsMenuOpen(false)}>
                 <div className="mr-2">
                   <ProfessionalLogo size={20} showText={false} autoAnimate={false} />
                 </div>
                 <span className="text-base font-bold">
-                  <span className="text-primary">yums</span>
+                  <span className="text-primary">lunara</span>
                   <span className="text-white">.fun</span>
                 </span>
               </Link>
@@ -248,7 +212,7 @@ export default function Navbar() {
               
               <Link 
                 href="/" 
-                className={`relative text-sm font-medium py-2 border-b border-navy-300/20 transition-colors ${
+                className={`relative text-sm font-medium py-2 border-b border-primary/10 transition-colors ${
                   activeLink === '/' ? 'text-primary' : 'text-white hover:text-primary'
                 }`}
                 onClick={() => handleLinkClick('/')}
@@ -262,7 +226,7 @@ export default function Navbar() {
               </Link>
               <Link 
                 href="/explore" 
-                className={`relative text-sm font-medium py-2 border-b border-navy-300/20 transition-colors ${
+                className={`relative text-sm font-medium py-2 border-b border-primary/10 transition-colors ${
                   activeLink === '/explore' ? 'text-primary' : 'text-white hover:text-primary'
                 }`}
                 onClick={() => handleLinkClick('/explore')}
@@ -276,7 +240,7 @@ export default function Navbar() {
               </Link>
               <Link 
                 href="/roadmap" 
-                className={`relative text-sm font-medium py-2 border-b border-navy-300/20 transition-colors ${
+                className={`relative text-sm font-medium py-2 border-b border-primary/10 transition-colors ${
                   activeLink === '/roadmap' ? 'text-primary' : 'text-white hover:text-primary'
                 }`}
                 onClick={() => handleLinkClick('/roadmap')}
@@ -290,7 +254,7 @@ export default function Navbar() {
               </Link>
               <Link 
                 href="/watchlist" 
-                className={`relative text-sm font-medium py-2 border-b border-navy-300/20 transition-colors ${
+                className={`relative text-sm font-medium py-2 border-b border-primary/10 transition-colors ${
                   activeLink === '/watchlist' ? 'text-primary' : 'text-white hover:text-primary'
                 }`}
                 onClick={() => handleLinkClick('/watchlist')}
@@ -304,7 +268,7 @@ export default function Navbar() {
               </Link>
               <div 
                 onClick={() => setIsMenuOpen(false)} 
-                className={`relative py-2 border-b border-navy-300/20 transition-colors ${
+                className={`relative py-2 border-b border-primary/10 transition-colors ${
                   activeLink === '/how-it-works' ? 'text-primary' : 'text-white hover:text-primary'
                 }`}
               >
@@ -318,7 +282,7 @@ export default function Navbar() {
               
               <Link 
                 href="/support" 
-                className={`relative text-sm font-medium py-2 border-b border-navy-300/20 transition-colors ${
+                className={`relative text-sm font-medium py-2 border-b border-primary/10 transition-colors ${
                   activeLink === '/support' ? 'text-primary' : 'text-white hover:text-primary'
                 }`}
                 onClick={() => handleLinkClick('/support')}
@@ -333,7 +297,7 @@ export default function Navbar() {
               
               <Link 
                 href="/profile" 
-                className={`text-sm font-medium py-2 border-t border-navy-300/20 transition-colors ${
+                className={`text-sm font-medium py-2 border-t border-primary/10 transition-colors ${
                   activeLink === '/profile' ? 'text-primary' : 'text-white hover:text-primary'
                 }`}
                 onClick={() => handleLinkClick('/profile')}

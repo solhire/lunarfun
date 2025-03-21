@@ -3,39 +3,39 @@
 @tailwind utilities;
 
 :root {
-  /* Updated color system */
-  --background: #121212;
-  --foreground: #ffffff;
-  --foreground-secondary: #E0E0E0;
-  --primary: #FF0000;
-  --primary-light: #FF3333;
-  --primary-dark: #CC0000;
-  --navy: #12131A;
-  --navy-light: #2A2D3A;
-  --navy-dark: #0A0B12;
-  --accent-teal: #36B5A5;
-  --accent-red: #FF4D4D;
-  --accent-purple: #8A6DFF;
-  --card-bg: rgba(42, 45, 58, 0.5);
-  --card-border: rgba(255, 255, 255, 0.1);
-  --success: #4CAF50;
-  --error: #F44336;
-  --warning: #FF9800;
-  --info: #2196F3;
+  /* Updated color system for bright Lunara theme */
+  --background: #13132B;
+  --foreground: #FFFFFF;
+  --foreground-secondary: #F0E6FF;
+  --primary: #C5B6E3;
+  --primary-light: #E2D8F5;
+  --primary-dark: #9A89C9;
+  --navy: #13132B;
+  --navy-light: #252547;
+  --navy-dark: #0D0D1E;
+  --accent-teal: #7EE7D8;
+  --accent-red: #FF6B8B;
+  --accent-purple: #F8F2FF;
+  --card-bg: rgba(37, 37, 71, 0.4);
+  --card-border: rgba(197, 182, 227, 0.15);
+  --success: #6FE7B0;
+  --error: #FF6B8B;
+  --warning: #FFB17A;
+  --info: #7AC9FF;
   
   /* Glass effect variables */
-  --glass-bg: rgba(42, 45, 58, 0.25);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  --glass-bg: rgba(37, 37, 71, 0.2);
+  --glass-border: rgba(197, 182, 227, 0.12);
+  --glass-shadow: 0 8px 32px rgba(197, 182, 227, 0.15);
   --glass-blur: 12px;
 
   --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 0, 0, 0;
-  --background-end-rgb: 0, 0, 0;
-  --accent: #333333;
-  --border: #2A2A2A;
-  --ring: #FF0000;
-  --muted: #666666;
+  --background-start-rgb: 19, 19, 43;
+  --background-end-rgb: 13, 13, 30;
+  --accent: #E2D8F5;
+  --border: #252547;
+  --ring: #C5B6E3;
+  --muted: #8282B0;
 }
 
 @theme inline {
@@ -54,13 +54,43 @@
 }
 
 body {
-  background: var(--background);
+  background: linear-gradient(135deg, var(--background) 0%, var(--navy-dark) 100%);
   color: var(--foreground);
   font-family: var(--font-inter), 'Inter', 'SF Pro Display', Arial, Helvetica, sans-serif;
   line-height: 1.6;
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(to bottom, transparent, rgb(var(--background-end-rgb)))
-    rgb(var(--background-start-rgb));
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Add starfield background effect */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+    radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 100px 100px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Add subtle nebula effect */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 30%, rgba(197, 182, 227, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(126, 231, 216, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
 }
 
 @layer base {
@@ -98,16 +128,21 @@ body {
   }
   
   .btn-primary {
-    background-color: var(--primary);
+    background: linear-gradient(135deg, var(--primary-light), var(--primary));
     color: var(--navy);
+    box-shadow: 
+      0 4px 15px rgba(197, 182, 227, 0.3),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.1);
     position: relative;
     overflow: hidden;
   }
   
   .btn-primary:hover {
-    background-color: var(--primary-light);
+    background: linear-gradient(135deg, var(--primary-light), var(--primary-dark));
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(255, 209, 0, 0.25);
+    box-shadow: 
+      0 8px 20px rgba(197, 182, 227, 0.4),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.2);
   }
   
   .btn-primary::after {
@@ -159,18 +194,23 @@ body {
   
   /* Modern card styles */
   .card {
-    background-color: var(--card-bg);
-    border: 1px solid var(--card-border);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    box-shadow: 
+      0 4px 24px rgba(197, 182, 227, 0.1),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    transition: all 0.3s ease;
     border-radius: 16px;
     overflow: hidden;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    backdrop-filter: blur(var(--glass-blur));
   }
   
   .card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
-    border-color: rgba(255, 255, 255, 0.15);
+    border-color: rgba(197, 182, 227, 0.25);
+    box-shadow: 
+      0 8px 32px rgba(197, 182, 227, 0.15),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
   }
   
   /* Token card specific styles */
@@ -826,4 +866,223 @@ body {
 
 .animate-fade-in {
   animation: fade-in 0.5s ease-out forwards;
+}
+
+/* Cosmic Effects */
+.cosmic-glow {
+  position: relative;
+  overflow: hidden;
+}
+
+.cosmic-glow::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(45deg, var(--primary), var(--accent-teal), var(--primary-light));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: inherit;
+  z-index: -1;
+  filter: blur(8px);
+}
+
+.cosmic-glow:hover::before {
+  opacity: 0.5;
+}
+
+/* Ethereal Background */
+.ethereal-bg {
+  position: relative;
+  overflow: hidden;
+}
+
+.ethereal-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 20% 30%, var(--primary-light) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, var(--accent-teal) 0%, transparent 50%);
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+/* Floating Animation */
+@keyframes float {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(2deg);
+  }
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+}
+
+.float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Shimmer Effect */
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--primary-light),
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: shimmer 3s infinite;
+}
+
+/* Star Field */
+.star-field {
+  position: relative;
+}
+
+.star-field::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+    1px 1px at 20px 30px,
+    var(--primary-light) 50%,
+    transparent 50%
+  ),
+  radial-gradient(
+    1px 1px at 40px 70px,
+    var(--accent-teal) 50%,
+    transparent 50%
+  ),
+  radial-gradient(
+    1px 1px at 50px 160px,
+    var(--primary) 50%,
+    transparent 50%
+  ),
+  radial-gradient(
+    1px 1px at 90px 40px,
+    var(--primary-light) 50%,
+    transparent 50%
+  ),
+  radial-gradient(
+    1px 1px at 130px 80px,
+    var(--accent-teal) 50%,
+    transparent 50%
+  );
+  background-repeat: repeat;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* Glass Effect */
+.glass {
+  background: rgba(16, 16, 30, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(177, 156, 217, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(16, 16, 30, 0.37);
+}
+
+/* Gradient Text */
+.gradient-text {
+  background: linear-gradient(45deg, var(--primary), var(--primary-light), var(--accent-teal));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 3s infinite;
+}
+
+/* Pulse Effect */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(177, 156, 217, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(177, 156, 217, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(177, 156, 217, 0);
+  }
+}
+
+.pulse {
+  animation: pulse 2s infinite;
+}
+
+/* Hover Card Effect */
+.hover-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 
+    0 10px 20px -5px rgba(177, 156, 217, 0.3),
+    0 0 0 1px rgba(177, 156, 217, 0.1);
+}
+
+/* Cosmic Button */
+.cosmic-button {
+  position: relative;
+  background: linear-gradient(45deg, var(--primary), var(--primary-light));
+  border: none;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.cosmic-button::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(45deg, var(--primary), var(--accent-teal), var(--primary-light));
+  filter: blur(8px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.cosmic-button:hover {
+  transform: translateY(-2px);
+}
+
+.cosmic-button:hover::before {
+  opacity: 0.5;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--navy-light);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-light);
+}
+
+/* Selection */
+::selection {
+  background: var(--primary);
+  color: white;
 } 

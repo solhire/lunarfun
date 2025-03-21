@@ -8,6 +8,7 @@ import LoadingIndicator from '@/components/LoadingIndicator';
 import { Token } from '@/firebase/types';
 import { TokenInfo } from '@/services/tokenDiscovery';
 import { Timestamp } from 'firebase/firestore';
+import { motion } from 'framer-motion';
 
 // Categories for filtering
 const CATEGORIES = [
@@ -120,102 +121,150 @@ export default function ExplorePage() {
   };
   
   return (
-    <main className="min-h-screen py-10">
-      <div className="container mx-auto px-4">
-        <h1 className="text-3xl font-bold mb-8">Explore Tokens</h1>
-        
-        {/* Search and Filters */}
-        <div className="mb-8 space-y-4">
-          <div className="flex flex-col md:flex-row gap-4">
-            <div className="flex-1">
-              <div className="relative">
-                <input
-                  type="text"
-                  placeholder="Search by name or symbol..."
-                  className="w-full px-4 py-3 bg-black/40 border border-gray-800 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary text-white pl-10"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400 absolute left-3 top-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-              </div>
-            </div>
-            
-            <div className="flex gap-4">
-              <div className="relative min-w-48">
-                <select
-                  value={sortBy}
-                  onChange={handleSortChange}
-                  className="w-full px-4 py-3 bg-black/40 border border-gray-800 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary text-white appearance-none"
-                >
-                  {SORT_OPTIONS.map(option => (
-                    <option key={option.value} value={option.value}>{option.label}</option>
-                  ))}
-                </select>
-                <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
-                  </svg>
-                </div>
-              </div>
-              
-              <button
-                onClick={toggleSortOrder}
-                className="px-4 py-3 bg-black/40 border border-gray-800 rounded-lg text-white hover:bg-gray-800 transition-colors"
-                aria-label={sortOrder === 'asc' ? 'Sort descending' : 'Sort ascending'}
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className={`h-5 w-5 transition-transform ${sortOrder === 'asc' ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-            </div>
-          </div>
-          
-          <div className="flex flex-wrap gap-2">
-            {CATEGORIES.map(category => (
-              <button
-                key={category}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                  selectedCategory === category
-                    ? 'bg-primary text-white'
-                    : 'bg-black/40 text-gray-300 hover:bg-gray-800'
-                }`}
-                onClick={() => setSelectedCategory(category)}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
+    <main className="min-h-screen bg-navy relative overflow-hidden pt-24 pb-20">
+      {/* Background Effects */}
+      <div className="absolute inset-0 bg-[url('/stars.png')] opacity-20"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent"></div>
+
+      <div className="container mx-auto px-6">
+        {/* Header */}
+        <div className="max-w-4xl mx-auto text-center mb-16">
+          <motion.h1 
+            className="text-4xl md:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary via-primary-light to-accent-teal"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            Explore the Cosmos
+          </motion.h1>
+          <motion.p
+            className="text-lg text-white/70"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            Discover new tokens and track their journey through the stars
+          </motion.p>
         </div>
-        
-        {/* Results */}
-        {isLoading ? (
-          <div className="flex justify-center py-20">
-            <LoadingIndicator message="Loading tokens..." />
+
+        {/* Search and Filters */}
+        <motion.div 
+          className="max-w-2xl mx-auto mb-12"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
+          <div className="flex gap-4 items-center bg-navy-light/30 backdrop-blur-xl rounded-full p-2">
+            <div className="flex-1 flex items-center px-4">
+              <span className="text-white/50 mr-3">🔍</span>
+              <input
+                type="text"
+                placeholder="Search tokens..."
+                className="w-full bg-transparent border-none text-white placeholder-white/50 focus:outline-none"
+              />
+            </div>
+            <button className="px-6 py-2 rounded-full bg-primary/20 hover:bg-primary/30 text-primary-light transition-all duration-300">
+              Search
+            </button>
           </div>
-        ) : filteredTokens.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredTokens.map(token => (
-              <TokenCard key={token.id} token={convertToTokenInfo(token)} />
+        </motion.div>
+
+        {/* Empty State */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="max-w-4xl mx-auto"
+        >
+          <div className="bg-navy-light/30 backdrop-blur-xl rounded-2xl p-12 text-center relative overflow-hidden">
+            {/* Background Animation */}
+            <div className="absolute inset-0">
+              {[...Array(8)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="absolute w-1 h-1 bg-primary rounded-full"
+                  animate={{
+                    y: ['0%', '100%'],
+                    opacity: [0, 1, 0],
+                    scale: [0, 1, 0]
+                  }}
+                  transition={{
+                    duration: Math.random() * 3 + 2,
+                    repeat: Infinity,
+                    delay: Math.random() * 2,
+                    ease: 'linear'
+                  }}
+                  style={{
+                    left: `${Math.random() * 100}%`,
+                    top: `-${Math.random() * 20}%`
+                  }}
+                />
+              ))}
+            </div>
+
+            {/* Content */}
+            <div className="relative">
+              <motion.div
+                initial={{ scale: 0.8 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 0.5 }}
+                className="mb-6 text-7xl opacity-75"
+              >
+                🌠
+              </motion.div>
+              <h3 className="text-2xl font-bold text-white mb-4">The Cosmos Awaits</h3>
+              <p className="text-white/60 mb-8 max-w-lg mx-auto">
+                No tokens have been launched into orbit yet. Be the first to create a token and start your cosmic journey.
+              </p>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <Link 
+                  href="/create" 
+                  className="inline-flex items-center px-6 py-3 rounded-full bg-primary/20 hover:bg-primary/30 text-primary-light transition-all duration-300 group"
+                >
+                  <span>Launch First Token</span>
+                  <motion.span 
+                    className="ml-2"
+                    animate={{ x: [0, 4, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                  >
+                    →
+                  </motion.span>
+                </Link>
+                <Link 
+                  href="/how-it-works" 
+                  className="inline-flex items-center px-6 py-3 rounded-full bg-navy-light/50 hover:bg-navy-light/70 text-white/80 hover:text-white transition-all duration-300"
+                >
+                  Learn More
+                </Link>
+              </div>
+            </div>
+
+            {/* Decorative Elements */}
+            <div className="absolute -top-4 -right-4 w-32 h-32 bg-gradient-to-br from-primary/20 to-transparent rounded-full blur-2xl"></div>
+            <div className="absolute -bottom-8 -left-8 w-40 h-40 bg-gradient-to-tr from-accent-teal/20 to-transparent rounded-full blur-2xl"></div>
+          </div>
+
+          {/* Quick Stats */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8">
+            {[
+              { label: 'Listed Tokens', value: '0' },
+              { label: 'Total Holders', value: '0' },
+              { label: 'Trading Volume', value: '$0' },
+              { label: 'Market Cap', value: '$0' }
+            ].map((stat, i) => (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4 + i * 0.1 }}
+                className="bg-navy-light/20 backdrop-blur-sm rounded-xl p-4 text-center"
+              >
+                <div className="text-sm text-white/60 mb-1">{stat.label}</div>
+                <div className="text-xl font-bold text-primary">{stat.value}</div>
+              </motion.div>
             ))}
           </div>
-        ) : (
-          <div className="text-center py-20 bg-black/20 rounded-xl border border-gray-800">
-            <div className="inline-flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-gray-800">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-            <h2 className="text-xl font-bold mb-2">No tokens found</h2>
-            <p className="text-gray-400 mb-6">
-              {searchTerm ? `No results for "${searchTerm}"` : 'Try adjusting your filters or create a new token'}
-            </p>
-            <Link href="/create" className="inline-block px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors">
-              Create Token
-            </Link>
-          </div>
-        )}
+        </motion.div>
       </div>
     </main>
   );
