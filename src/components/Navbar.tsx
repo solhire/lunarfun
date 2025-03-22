@@ -63,12 +63,12 @@ export default function Navbar() {
             <span className="font-semibold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-light">NOTICE:</span>
             <span className="text-white/90">Contract address will be announced first on</span>
             <a 
-              href="https://x.com/lunaradotfun" 
+              href="https://x.com/lunarafun" 
               target="_blank" 
               rel="noopener noreferrer" 
               className="text-primary hover:text-primary-light transition-colors"
             >
-              @lunaradotfun
+              @lunarafun
             </a>
             <span className="text-primary">✧</span>
           </div>
